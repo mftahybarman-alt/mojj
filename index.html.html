@@ -109,28 +109,6 @@ body[data-theme=crimson]{
   --blob1:#ff4560;--blob2:#6b0f2a;--blob3:#ff8a9b;--blob-o:.28;--sun-o:0;--noise:none;--dots:rgba(255,80,100,.06);
   --wv-me-on:#fff;--wv-me-off:rgba(255,255,255,.45);--wv-th-on:#ff4560;--wv-th-off:rgba(255,255,255,.28);
 }
-body[data-theme=white]{
-  --page-bg:#eef2f8;--app-bg:#ffffff;--solid-bg:#ffffff;--panel-2:rgba(15,23,42,.05);--solid:rgba(255,255,255,.97);
-  --text:#0f172a;--dim:#64748b;--line:rgba(15,23,42,.1);--accent:#2563eb;--accent-2:#60a5fa;--on-accent:#fff;--on-grad:#fff;
-  --grad:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%);
-  --out-bg:linear-gradient(135deg,#3b82f6,#2563eb);--out-text:#fff;--in-bg:#f1f5f9;--in-text:#0f172a;--in-border:1px solid rgba(15,23,42,.06);
-  --sh-1:0 12px 40px rgba(15,23,42,.14);--sh-2:0 3px 10px rgba(15,23,42,.08);--sh-in:inset 0 0 0 1px rgba(15,23,42,.08);
-  --bub-sh:0 1px 3px rgba(15,23,42,.08);--glow:0 4px 14px rgba(37,99,235,.28);--blur:none;
-  --sel:rgba(37,99,235,.08);--sel-sh:inset 0 0 0 1px rgba(37,99,235,.14);
-  --blob1:transparent;--blob2:transparent;--blob3:transparent;--blob-o:0;--sun-o:0;--noise:none;--dots:rgba(15,23,42,.05);
-  --wv-me-on:#fff;--wv-me-off:rgba(255,255,255,.55);--wv-th-on:#2563eb;--wv-th-off:rgba(15,23,42,.22);
-}
-body[data-theme=ocean]{
-  --page-bg:radial-gradient(circle at 25% 10%,#0b3a5c,#041526 70%);--app-bg:rgba(5,24,42,.72);--solid-bg:#06192b;--panel-2:rgba(120,200,255,.07);--solid:rgba(8,32,54,.92);
-  --text:#e6f4ff;--dim:#84a8c4;--line:rgba(110,190,255,.15);--accent:#22b8f0;--accent-2:#4dd0e1;--on-accent:#03141f;--on-grad:#fff;
-  --grad:linear-gradient(135deg,#22b8f0 0%,#0a79c2 100%);
-  --out-bg:linear-gradient(135deg,#1596d6,#0b5ea8);--out-text:#fff;--in-bg:rgba(255,255,255,.07);--in-text:#e6f4ff;--in-border:1px solid rgba(110,190,255,.1);
-  --sh-1:0 12px 40px rgba(0,10,25,.55);--sh-2:0 4px 14px rgba(0,10,25,.35);--sh-in:inset 0 0 0 1px rgba(110,190,255,.14);
-  --bub-sh:0 2px 10px rgba(0,10,25,.25);--glow:0 0 22px rgba(34,184,240,.4);--blur:blur(18px) saturate(150%);
-  --sel:linear-gradient(90deg,rgba(34,184,240,.14),rgba(77,208,225,.08));--sel-sh:inset 0 0 0 1px rgba(110,190,255,.2);
-  --blob1:#0ea5e9;--blob2:#0b3d91;--blob3:#06b6d4;--blob-o:.32;--sun-o:0;--noise:none;--dots:rgba(110,190,255,.06);
-  --wv-me-on:#fff;--wv-me-off:rgba(255,255,255,.45);--wv-th-on:#22b8f0;--wv-th-off:rgba(255,255,255,.28);
-}
 /* ============ BASE ============ */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
@@ -621,20 +599,6 @@ body[data-device=android] .statusbar{padding:0 22px 8px;font-size:13px;font-weig
 .g-go svg{width:20px;height:20px}
 .g-spin{display:none;width:20px;height:20px;border-radius:50%;border:2.5px solid currentColor;border-top-color:transparent;animation:spinr .8s linear infinite}
 .g-go.load .g-spin{display:block}.g-go.load .g-lbl,.g-go.load svg{display:none}
-.g-tabs{position:relative;display:grid;grid-template-columns:1fr 1fr;margin-top:22px;padding:4px;border-radius:19px;background:var(--panel-2);box-shadow:var(--sh-in)}
-.g-tabs button{position:relative;z-index:1;height:42px;border-radius:15px;font-size:14.5px;font-weight:700;color:var(--dim);transition:color .3s}
-.g-tabs button.on{color:var(--on-grad)}
-.g-tabs i{position:absolute;top:4px;bottom:4px;inset-inline-start:4px;width:calc(50% - 4px);border-radius:15px;background:var(--grad);box-shadow:var(--glow);transition:transform .45s var(--ios)}
-.g-tabs.su i{transform:translateX(-100%)}
-[dir=ltr] .g-tabs.su i{transform:translateX(100%)}
-.g-ggl{margin-top:26px;background:var(--panel-2)!important;color:var(--text)!important;box-shadow:var(--sh-in)!important;gap:10px}
-.g-ggl svg{width:20px;height:20px}
-.g-or{display:flex;align-items:center;gap:12px;margin-top:18px;color:var(--dim);font-size:12.5px}
-.g-or:before,.g-or:after{content:"";flex:1;height:1px;background:var(--line)}
-.g-field.first{margin-top:18px}
-.g-link{display:block;margin:6px auto 0;padding:8px 10px;font-size:13px;color:var(--dim)}
-.g-link[disabled]{opacity:.55;pointer-events:none}
-.g-sub b{color:var(--text);direction:ltr;unicode-bidi:embed}
 .g-themes{display:flex;gap:10px;margin-top:24px}
 .g-td{width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 1px var(--line);transition:transform .4s var(--spring),box-shadow .3s}
 .g-td:hover{transform:scale(1.18)}.g-td:active{transform:scale(.9)}
@@ -662,92 +626,7 @@ button,input,textarea,select{font-family:inherit}
 
 .pv span .i,.quote span .i,.banner span .i{display:inline-block;width:15px;height:15px;vertical-align:-3px;margin-inline-end:5px}
 .theme-grid.collapsed .tmore{display:none}
-
-/* ============ TOP BAR: random-theme (palette) button beside search ============ */
-.topbar{display:flex;align-items:center;gap:10px;margin:calc(var(--sat) + 20px) 18px 4px;flex:none}
-.desk .topbar{margin-top:22px}
-.view[data-v=chats] .topbar .search,.desk .view[data-v=chats] .topbar .search{margin:0;flex:1;min-width:0}
-.rnd{width:48px;height:48px;border-radius:17px}
-.rnd .i{width:22px;height:22px}
-.rnd.pop .i{animation:rndpop .6s var(--spring)}
-@keyframes rndpop{from{transform:rotate(-200deg) scale(.4)}to{transform:none}}
-/* password eye */
-.g-eye{width:30px;height:30px;display:grid;place-items:center;flex:none;color:var(--dim);transition:color .3s}
-.g-eye svg{width:20px;height:20px}
-.g-tabs{width:100%}
-/* bigger, full-width login/signup switch */
-.g-tabs{width:100%;align-self:stretch;margin-top:24px;padding:5px;border-radius:22px}
-.g-tabs button{height:54px;font-size:17px;border-radius:17px}
-.g-tabs i{top:5px;bottom:5px;inset-inline-start:5px;width:calc(50% - 5px);border-radius:17px}
 </style>
-<script>
-/* ================= CONFIG: put your Supabase project URL + publishable key here (only place) ================= */
-window.MOWJ_CFG={url:'https://valvnmwgnikgywvqrltv.supabase.co',key:'sb_publishable_vFGH9kAwnTfhPw9A8uv3mA_wmwMiETs'};
-/* ================= AUTH: plain fetch to /auth/v1, no library ================= */
-(function(){
-var CFG=window.MOWJ_CFG;CFG.url=String(CFG.url).replace(/\/+$/,'');
-CFG.ok=/^https:\/\/[A-Za-z0-9.-]+$/.test(CFG.url)&&CFG.url.indexOf('HERE')<0&&String(CFG.key).length>20&&String(CFG.key).indexOf('HERE')<0;
-var SK='mowj.sess',of=window.fetch.bind(window);
-function wipe(keep,idb){
-  try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('mowj.')===0&&keep.indexOf(k)<0)localStorage.removeItem(k)})}catch(e){}
-  if(idb){try{indexedDB.deleteDatabase('mowj-media')}catch(e){}}}
-/* new Supabase project => drop everything cached from the old one (keep theme, saved messages, avatar) */
-try{localStorage.removeItem('sb-qhmscabixzvpvionvnzy-auth-token');
-  if(CFG.ok&&localStorage.getItem('mowj.proj')!==CFG.url){wipe(['mowj.prefs','mowj.saved','mowj.avatar'],false);localStorage.setItem('mowj.proj',CFG.url)}}catch(e){}
-function rd(){try{return JSON.parse(localStorage.getItem(SK)||'null')}catch(e){return null}}
-function wr(s){try{s?localStorage.setItem(SK,JSON.stringify(s)):localStorage.removeItem(SK)}catch(e){}}
-function now(){return Math.floor(Date.now()/1000)}
-function pack(d){return{access_token:d.access_token,refresh_token:d.refresh_token,expires_at:d.expires_at||now()+(d.expires_in||3600),uid:d.user&&d.user.id,email:d.user&&d.user.email}}
-function call(path,body,bearer){
-  var ac=new AbortController(),t=setTimeout(function(){ac.abort()},20000);
-  var h={'Content-Type':'application/json',apikey:CFG.key};if(bearer)h.Authorization='Bearer '+bearer;
-  return of(CFG.url+'/auth/v1/'+path,{method:'POST',signal:ac.signal,headers:h,body:JSON.stringify(body||{})})
-    .then(function(r){return r.json().catch(function(){return{}}).then(function(d){clearTimeout(t);return{ok:r.ok,status:r.status,data:d||{}}})})
-    .catch(function(e){clearTimeout(t);return{ok:false,status:0,data:{msg:e&&e.name==='AbortError'?'timeout':'network'}}})}
-var rp=null,st=null;
-/* refresh token rejected for good => back to the login page */
-function dead(){wr(null);if(!document.getElementById('gate'))setTimeout(function(){location.reload()},60)}
-function refresh(){
-  if(rp)return rp;
-  var s=rd();if(!s||!s.refresh_token||!CFG.ok)return Promise.resolve(null);
-  rp=call('token?grant_type=refresh_token',{refresh_token:s.refresh_token}).then(function(r){
-    rp=null;
-    if(r.ok&&r.data.access_token){var n=pack(r.data);if(!n.uid)n.uid=s.uid;if(!n.email)n.email=s.email;wr(n);return n}
-    var c=rd();
-    if(c&&c.refresh_token!==s.refresh_token)return c; /* another tab already refreshed */
-    if(r.status>=400&&r.status<500&&r.status!==429&&r.status!==408)dead();
-    return null});
-  return rp}
-function sched(){clearTimeout(st);var s=rd();if(!s)return;
-  var ms=(s.expires_at-now()-90)*1000;
-  st=setTimeout(function(){refresh().then(sched)},Math.max(5000,Math.min(ms,2000000000)))}
-function token(){var s=rd();if(!s)return Promise.resolve(null);
-  if(s.expires_at-now()>60)return Promise.resolve(s.access_token);
-  return refresh().then(function(n){var c=n||rd();return c?c.access_token:null})}
-/* global fetch: adds the user's Authorization header to every /rest/v1 request, retries once on 401 */
-window.fetch=function(i,o){var u='';try{u=typeof i==='string'?i:(i&&i.url)||''}catch(e){}
-  if(!CFG.ok||u.indexOf(CFG.url+'/rest/v1/')!==0)return of(i,o);
-  o=Object.assign({},o||{});var h=new Headers(o.headers||{});
-  if(h.has('Authorization')){o.headers=h;return of(i,o)}
-  if(!h.has('apikey'))h.set('apikey',CFG.key);
-  return token().then(function(t){
-    if(t)h.set('Authorization','Bearer '+t);o.headers=h;
-    return of(i,o).then(function(r){
-      if(r.status!==401||!t)return r;
-      return refresh().then(function(n){
-        if(!n)return r;
-        var h2=new Headers(h);h2.set('Authorization','Bearer '+n.access_token);
-        return of(i,Object.assign({},o,{headers:h2}))})})})};
-function logout(){var s=rd();
-  if(s&&CFG.ok){try{of(CFG.url+'/auth/v1/logout?scope=local',{method:'POST',keepalive:true,headers:{apikey:CFG.key,Authorization:'Bearer '+s.access_token}}).catch(function(){})}catch(e){}}
-  wr(null);clearTimeout(st);wipe(['mowj.prefs','mowj.proj'],true)}
-window.MOWJ={rd:rd,wr:wr,pack:pack,call:call,refresh:refresh,token:token,sched:sched,wipe:wipe,logout:logout,
-  emailOf:function(u){return 'mowj.'+u+'@gmail.com'}};
-if(rd())sched();
-document.addEventListener('visibilitychange',function(){if(!document.hidden&&rd())token()});
-addEventListener('online',function(){if(rd())token()});
-})();
-</script>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>window.Peer||document.write('<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"><\/script>')</script>
 </head>
@@ -757,118 +636,77 @@ addEventListener('online',function(){if(rd())token()});
   <div class="g-card">
     <div class="g-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c2.5 0 2.5-6 5-6s2.5 12 5 12 2.5-12 5-12 1.5 6 3 6" stroke-width="2.2"/></svg></div>
     <h1>به موج خوش اومدی</h1>
-    <div class="g-sub" id="gSub">با نام کاربری و رمزت وارد شو</div>
-    <div class="g-tabs" id="gTabs"><i></i><button type="button" data-m="login" class="on">ورود</button><button type="button" data-m="signup">ثبت‌نام</button></div>
-    <form id="gForm" novalidate style="width:100%;display:flex;flex-direction:column">
-      <label class="g-field first" id="gUserF">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.4-4 3.5-6 7.5-6s7.1 2 7.5 6"/></svg>
-        <input id="gUser" type="text" dir="ltr" placeholder="نام کاربری (انگلیسی)" maxlength="20" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next" style="text-align:start">
-      </label>
-      <label class="g-field" id="gPassF" style="margin-top:12px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>
-        <input id="gPass" type="password" dir="ltr" placeholder="رمز عبور (حداقل ۶ کاراکتر)" maxlength="72" autocomplete="current-password" autocapitalize="none" enterkeyhint="go" style="text-align:start">
-        <button type="button" class="g-eye" id="gEye" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.500 12 5.500 21.500 12 21.500 12 18 18.500 12 18.500 2.500 12 2.500 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
-      </label>
-      <div class="g-err" id="gErr"></div>
-      <button class="g-go" id="gGo" type="submit"><span class="g-lbl" id="gLbl">ورود</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="g-spin"></span></button>
-    </form>
+    <label class="g-field" id="gField">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.4-4 3.5-6 7.5-6s7.1 2 7.5 6"/></svg>
+      <input id="gName" type="text" placeholder="اسمت چیه؟" maxlength="30" autocomplete="nickname">
+    </label>
+    <label class="g-field" id="gUserField" style="margin-top:12px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M15.6 12v1.3a2.6 2.6 0 0 0 5.2 0V12a8.8 8.8 0 1 0-3.5 7"/></svg>
+      <input id="gUser" type="text" dir="ltr" placeholder="نام کاربری" maxlength="20" autocomplete="username" autocapitalize="none" spellcheck="false" style="text-align:start">
+    </label>
+    <div class="g-err" id="gErr"></div>
+    <button class="g-go" id="gGo" type="button"><span class="g-lbl">ساخت حساب</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="g-spin"></span></button>
+    <div class="g-themes" id="gThemes"></div>
   </div>
 </div>
 <script>
 (function(){
-var M=window.MOWJ,CFG=window.MOWJ_CFG;
-var $g=function(i){return document.getElementById(i)};
-var gate=$g('gate'),user=null;
-try{user=JSON.parse(localStorage.getItem('mowj.user')||'null')}catch(e){}
-var sess=M.rd();
-/* already signed in => no gate */
-if(user&&user.name&&user.auth&&sess&&sess.refresh_token){gate.remove();return}
+var get=function(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}};
+var prefs=get('mowj.prefs')||{};
+var TH=[{id:'glass',meta:'#05060c',bg:'radial-gradient(circle at 30% 30%,#25d6f2,transparent 55%),radial-gradient(circle at 72% 72%,#8f5cff,transparent 55%),#0a0c18'},
+ {id:'neu',meta:'#e6e1d8',bg:'linear-gradient(145deg,#f4efe6,#d3cdc2)'},
+ {id:'synth',meta:'#2a0a55',bg:'linear-gradient(160deg,#2a0a55,#ff2d95 62%,#ff9040)'},
+ {id:'forest',meta:'#000',bg:'radial-gradient(circle at 62% 62%,#10e88a,transparent 60%),#000'},
+ {id:'sakura',meta:'#ffd9e6',bg:'linear-gradient(145deg,#fff1f5,#ff8fab 70%,#e8457c)'},
+ {id:'gold',meta:'#07070d',bg:'radial-gradient(circle at 65% 65%,#f2b84b,transparent 58%),#0d0c18'},
+ {id:'lavender',meta:'#e0d6ff',bg:'linear-gradient(145deg,#f3efff,#a58bff 70%,#6a46e8)'},
+ {id:'crimson',meta:'#080205',bg:'radial-gradient(circle at 65% 65%,#ff4560,transparent 58%),#12050a'}];
+var user=get('mowj.user');
+var gate=document.getElementById('gate');
+if(user&&user.name){gate.remove();return}
 gate.hidden=false;
-/* gate theme follows the system: light = white, dark = ocean blue */
-var mq=matchMedia('(prefers-color-scheme: dark)');
-function paint(){document.body.dataset.theme=mq.matches?'ocean':'white';$g('metaTheme').content=mq.matches?'#06192b':'#ffffff'}
+var theme=TH.some(function(t){return t.id===prefs.theme})?prefs.theme:'glass';
+function paint(){document.body.dataset.theme=theme;document.getElementById('metaTheme').content=TH.filter(function(t){return t.id===theme})[0].meta;
+  [].forEach.call(document.querySelectorAll('.g-td'),function(b){b.classList.toggle('on',b.dataset.t===theme)})}
+document.getElementById('gThemes').innerHTML=TH.map(function(t){return '<button class="g-td" data-t="'+t.id+'" aria-label="'+t.id+'" style="background:'+t.bg+'"></button>'}).join('');
+document.getElementById('gThemes').addEventListener('click',function(e){var b=e.target.closest('.g-td');if(!b||b.dataset.t===theme)return;
+  var ap=function(){theme=b.dataset.t;paint();var p=get('mowj.prefs')||{};p.theme=theme;try{localStorage.setItem('mowj.prefs',JSON.stringify(p))}catch(_){}};
+  document.startViewTransition?document.startViewTransition(ap):ap()});
 paint();
-if(mq.addEventListener)mq.addEventListener('change',paint);else if(mq.addListener)mq.addListener(paint);
-
-var UN=/^[A-Za-z][A-Za-z0-9_]{2,19}$/,mode='login';
-var uIn=$g('gUser'),pIn=$g('gPass'),uF=$g('gUserF'),pF=$g('gPassF'),go=$g('gGo'),tabs=$g('gTabs');
-function err(m,f){$g('gErr').textContent=m||'';if(f){f.classList.remove('err');void f.offsetWidth;f.classList.add('err')}}
-function clr(){[uF,pF].forEach(function(f){f.classList.remove('err')});$g('gErr').textContent=''}
-function busy(on){go.classList.toggle('load',on);go.disabled=on}
-if(!CFG.ok)err('آدرس پروژه و کلید Supabase هنوز داخل فایل تنظیم نشده');
-
-/* map auth / rest errors to Persian */
-function nice(r){
-  var d=r.data||{},code=String(d.error_code||d.code||''),msg=String(d.msg||d.message||d.error_description||d.error||'');
-  if(r.status===0)return msg==='timeout'?'سرور جواب نداد؛ اینترنت یا فیلترشکن رو چک کن':'اتصال برقرار نشد؛ اینترنت یا فیلترشکن رو چک کن';
-  if(code==='user_already_exists'||/already registered|already been registered/i.test(msg))return 'این نام کاربری قبلاً گرفته شده؛ اگه مال خودته از «ورود» استفاده کن';
-  if(code==='invalid_credentials'||/invalid login/i.test(msg))return 'نام کاربری یا رمز اشتباهه';
-  if(code==='weak_password'||/password/i.test(code))return 'رمز خیلی ضعیفه؛ یه رمز قوی‌تر بذار';
-  if(r.status===429||/rate_limit/.test(code))return 'تعداد درخواست‌ها زیاد بود، کمی بعد دوباره امتحان کن';
-  if(code==='signup_disabled')return 'ثبت‌نام در Supabase غیرفعاله (Allow new users to sign up)';
-  if(code==='email_address_invalid'||code==='validation_failed')return 'این نام کاربری پذیرفته نشد؛ یکی دیگه امتحان کن';
-  if(/api key|apikey/i.test(msg)||(r.status===401&&!code))return 'کلید پروژه اشتباهه؛ آدرس و Publishable key رو چک کن';
-  if(msg==='taken')return 'این نام کاربری قبلاً گرفته شده';
-  if(msg==='bad username')return 'نام کاربری معتبر نیست';
-  if(r.status===404||/PGRST20[25]|42P01/.test(code))return 'دیتابیس آماده نیست؛ SQL پروژه رو اجرا کن';
-  if(/42501/.test(code)||/permission denied/i.test(msg))return 'دسترسی دیتابیس بسته‌ست؛ بخش GRANT در SQL رو اجرا کن';
-  return msg||('خطای ناشناخته ('+r.status+')')}
-
-function finish(row,s){
-  try{
-    var prev=localStorage.getItem('mowj.uid');
-    if(prev&&prev!==s.uid)M.wipe(['mowj.prefs','mowj.proj','mowj.sess'],false); /* different account on this device */
-    localStorage.setItem('mowj.uid',s.uid);
-    localStorage.setItem('mowj.user',JSON.stringify({id:row.id,name:row.name,username:row.username,auth:s.uid}))
-  }catch(e){}
+var inp=document.getElementById('gName'),fld=document.getElementById('gField'),uinp=document.getElementById('gUser'),ufld=document.getElementById('gUserField'),err=document.getElementById('gErr'),go=document.getElementById('gGo');
+function showErr(m,f){f=f||fld;err.textContent=m;fld.classList.remove('err');ufld.classList.remove('err');void f.offsetWidth;f.classList.add('err')}
+function clr(){fld.classList.remove('err');ufld.classList.remove('err');err.textContent=''}
+inp.addEventListener('input',clr);
+uinp.addEventListener('input',function(){uinp.value=uinp.value.replace(/[^A-Za-z0-9_]/g,'');clr()});
+function finish(u){try{localStorage.setItem('mowj.user',JSON.stringify(u))}catch(_){}
   gate.classList.add('bye');setTimeout(function(){location.reload()},450)}
-
-/* after sign-in: load the profile row, or create it with mowj_register */
-async function afterAuth(s,u){
-  var H={'Content-Type':'application/json',apikey:CFG.key};
-  var r=await fetch(CFG.url+'/rest/v1/mowj_users?select=id,name,username&auth_id=eq.'+encodeURIComponent(s.uid),{headers:H}).catch(function(){return null});
-  if(!r)return{ok:false,status:0,data:{msg:'network'}};
-  var d=await r.json().catch(function(){return{}});
-  if(!r.ok)return{ok:false,status:r.status,data:d};
-  var row=Array.isArray(d)?d[0]:null;
-  if(!row){
-    r=await fetch(CFG.url+'/rest/v1/rpc/mowj_register',{method:'POST',headers:H,body:JSON.stringify({p_name:u,p_username:u})}).catch(function(){return null});
-    if(!r)return{ok:false,status:0,data:{msg:'network'}};
-    d=await r.json().catch(function(){return{}});
-    if(!r.ok)return{ok:false,status:r.status,data:d};
-    row=Array.isArray(d)?d[0]:d}
-  if(!row||!row.id)return{ok:false,status:500,data:{msg:'پروفایل ساخته نشد'}};
-  return{ok:true,row:row}}
-
+var SB_URL='https://qhmscabixzvpvionvnzy.supabase.co';
+var SB_KEY='sb_publishable_8lUhmtLmHF-vHhpA-wwAAA_sX5AgZGZ';
 async function submit(){
-  if(go.disabled)return;
-  if(!CFG.ok)return err('آدرس پروژه و کلید Supabase هنوز داخل فایل تنظیم نشده');
-  var u=uIn.value.trim().toLowerCase(),p=pIn.value;
-  if(!UN.test(u))return err('نام کاربری باید ۳ تا ۲۰ حرف انگلیسی، عدد یا _ باشه و با حرف شروع بشه',uF);
-  if(p.length<6)return err('رمز باید حداقل ۶ کاراکتر باشه',pF);
-  clr();busy(true);
-  var r=await M.call(mode==='signup'?'signup':'token?grant_type=password',{email:M.emailOf(u),password:p});
-  if(!r.ok){busy(false);return err(nice(r),/exists|taken/.test(JSON.stringify(r.data))?uF:null)}
-  if(!r.data.access_token){busy(false);return err('در Supabase گزینه‌ی Confirm email رو خاموش کن')}
-  var s=M.pack(r.data);M.wr(s);M.sched();
-  var a=await afterAuth(s,u);
-  if(!a.ok){M.wr(null);busy(false);return err(nice(a),/taken/.test(JSON.stringify(a.data))?uF:null)}
-  finish(a.row,s)}
-
-$g('gForm').addEventListener('submit',function(e){e.preventDefault();submit()});
-uIn.addEventListener('input',function(){uIn.value=uIn.value.replace(/[^A-Za-z0-9_]/g,'');clr()});
-pIn.addEventListener('input',clr);
-uIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();pIn.focus()}});
-$g('gEye').addEventListener('click',function(){var h=pIn.type==='password';pIn.type=h?'text':'password';this.style.color=h?'var(--accent)':''});
-tabs.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.dataset.m===mode)return;
-  mode=b.dataset.m;clr();tabs.classList.toggle('su',mode==='signup');
-  [].forEach.call(tabs.querySelectorAll('button'),function(x){x.classList.toggle('on',x.dataset.m===mode)});
-  $g('gLbl').textContent=mode==='signup'?'ساخت حساب':'ورود';
-  $g('gSub').textContent=mode==='signup'?'یه نام کاربری انگلیسی و رمز انتخاب کن':'با نام کاربری و رمزت وارد شو';
-  pIn.autocomplete=mode==='signup'?'new-password':'current-password';
-  if(!CFG.ok)err('آدرس پروژه و کلید Supabase هنوز داخل فایل تنظیم نشده');
-  uIn.focus()});
-setTimeout(function(){uIn.focus()},300);
+  var name=inp.value.trim().replace(/\s+/g,' ');
+  if(name.length<2)return showErr('اسم باید حداقل ۲ حرف باشه');
+  if(name.length>30)return showErr('اسم نباید بیشتر از ۳۰ حرف باشه');
+  var uname=uinp.value.trim();
+  if(!/^[A-Za-z][A-Za-z0-9_]{2,19}$/.test(uname))return showErr('نام کاربری باید ۳ تا ۲۰ حرف انگلیسی، عدد یا _ باشه و با حرف شروع بشه',ufld);
+  go.classList.add('load');go.disabled=true;
+  try{
+    var r=await fetch(SB_URL+'/rest/v1/mowj_users',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Prefer':'return=representation'},body:JSON.stringify({name:name,username:uname})});
+    if(r.status===409){showErr('این نام کاربری قبلاً گرفته شده',ufld);go.classList.remove('load');go.disabled=false;return}
+    if(!r.ok){var et=await r.text().catch(function(){return''});var em='';try{em=JSON.parse(et).message||''}catch(_){}
+      throw new Error('کد '+r.status+(em?' — '+em:''))}
+    var d=await r.json().catch(function(){return null});
+    var row=Array.isArray(d)?d[0]:null;
+    if(!row)throw new Error('پاسخ خالی از دیتابیس');
+    finish({id:row.id,name:row.name,username:row.username||uname});
+  }catch(e){
+    showErr('حساب ساخته نشد، به دیتابیس وصل نشد ('+(e&&e.message?e.message:'خطای شبکه')+')',fld);
+    go.classList.remove('load');go.disabled=false;
+  }
+}
+go.addEventListener('click',submit);
+inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();uinp.focus()}});
+uinp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submit()}});
+setTimeout(function(){inp.focus()},300);
 })();
 </script>
 
@@ -903,7 +741,7 @@ setTimeout(function(){uIn.focus()},300);
       <nav class="rail" id="rail">
         <div class="logo" id="logo"></div>
         <div class="rail-tabs" id="railTabs"><i class="rail-ind"></i></div>
-        <div class="rail-bot"></div>
+        <div class="rail-bot"><button class="rt" id="railTheme" title="تعویض تم"></button></div>
       </nav>
 
       <section class="list-panel" id="listPanel"><div class="views" id="views"></div></section>
@@ -988,15 +826,14 @@ const fmtDur=s=>{s=Math.max(0,Math.round(s));return fa(Math.floor(s/60)+':'+pad(
 const NM={'ي':'ی','ك':'ک','ة':'ه','أ':'ا','إ':'ا','ۀ':'ه'};
 const norm=s=>String(s).toLowerCase().replace(/[يكةأإۀ]/g,c=>NM[c]).replace(/[۰-۹]/g,c=>String(c.charCodeAt(0)-1776)).replace(/[٠-٩]/g,c=>String(c.charCodeAt(0)-1632));
 const hl=(text,q)=>{if(!q)return esc(text);const i=norm(text).indexOf(q);if(i<0)return esc(text);return esc(text.slice(0,i))+'<mark>'+esc(text.slice(i,i+q.length))+'</mark>'+esc(text.slice(i+q.length))};
-const SB_URL=window.MOWJ_CFG.url,SB_KEY=window.MOWJ_CFG.key;
-const ME_USER=(function(){try{return String(JSON.parse(localStorage.getItem('mowj.user')||'{}').username||'').replace(/[^A-Za-z0-9_]/g,'').toLowerCase()}catch(e){return ''}})();
+const SB_URL='https://qhmscabixzvpvionvnzy.supabase.co',SB_KEY='sb_publishable_8lUhmtLmHF-vHhpA-wwAAA_sX5AgZGZ';
+const ME_USER=(function(){try{return String(JSON.parse(localStorage.getItem('mowj.user')||'{}').username||'').replace(/[^A-Za-z0-9_]/g,'')}catch(e){return ''}})();
 const ME_NAME=(function(){try{return String(JSON.parse(localStorage.getItem('mowj.user')||'{}').name||'شما').replace(/[<>&"'`]/g,'')||'شما'}catch(e){return 'شما'}})();
 let ME_AV=(function(){try{const o=JSON.parse(localStorage.getItem('mowj.avatar')||'null');const ok=v=>typeof v==='string'&&/^data:image\/jpeg;base64,/.test(v);return o&&ok(o.l)&&ok(o.s)?o:null}catch(e){return null}})();
 const store={get(){try{return JSON.parse(localStorage.getItem('mowj.prefs')||'{}')}catch(e){return{}}},set(o){try{localStorage.setItem('mowj.prefs',JSON.stringify(o))}catch(e){}}};
 
 /* ================= icons ================= */
 const ICONS={
-palette:'<path d="M12 3a9 9 0 1 0 0 18c1.100 0 1.800-.8 1.800-1.700 0-.5-.2-.9-.5-1.200-.3-.3-.5-.7-.5-1.200 0-.9.8-1.700 1.700-1.700H16a5 5 0 0 0 5-5c0-4-4-7.200-9-7.200z"/><circle cx="7.500" cy="11" r="1"/><circle cx="10" cy="7.500" r="1"/><circle cx="14.500" cy="7.500" r="1"/>',
 chat:'<path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3.5 20.5l1.4-4.7A8.4 8.4 0 1 1 21 11.5z"/>',
 phone:'<path d="M5.5 3.5h3.2l1.6 4.2-2 1.4a11 11 0 0 0 5.600 5.600l1.400-2 4.200 1.600v3.200a2 2 0 0 1-2.200 2A16.500 16.500 0 0 1 3.500 5.700a2 2 0 0 1 2-2.200z"/>',
 users:'<circle cx="9" cy="8.5" r="3.3"/><path d="M2.800 20c.3-3.400 2.900-5.400 6.200-5.400s5.900 2 6.200 5.400"/><path d="M16 5.500a3.200 3.200 0 0 1 0 6M18.400 14.900c1.700.7 2.700 2.300 2.900 4.600"/>',
@@ -1053,16 +890,14 @@ const CONTACTS=[
 const byId={};CONTACTS.forEach(c=>byId[c.id]=c);
 const CALLS=[];
 const TABS=[{id:'chats',label:'گفتگوها',icon:'chat'},{id:'calls',label:'تماس‌ها',icon:'phone'},{id:'contacts',label:'مخاطبین',icon:'users'},{id:'settings',label:'تنظیمات',icon:'sliders'}];
-const THEMES=[{id:'white',name:'۱. سفید',meta:'#ffffff',bg:'linear-gradient(145deg,#ffffff,#e6edf9 62%,#2563eb)'},
- {id:'ocean',name:'۲. آبی اقیانوسی',meta:'#06192b',bg:'radial-gradient(circle at 65% 65%,#22b8f0,transparent 58%),#06192b'},
- {id:'glass',name:'۳. شیشه‌ای تیره',meta:'#05060c',bg:'radial-gradient(circle at 30% 30%,#25d6f2,transparent 55%),radial-gradient(circle at 72% 72%,#8f5cff,transparent 55%),#0a0c18'},
- {id:'neu',name:'۴. نئومورفیک مدرن',meta:'#e6e1d8',bg:'linear-gradient(145deg,#f4efe6,#d3cdc2)'},
- {id:'synth',name:'۵. گرادیان غروب نئونی',meta:'#2a0a55',bg:'linear-gradient(160deg,#2a0a55,#ff2d95 62%,#ff9040)'},
- {id:'forest',name:'۶. مات ارگانیک',meta:'#000000',bg:'radial-gradient(circle at 62% 62%,#10e88a,transparent 60%),#000'},
- {id:'sakura',name:'۷. شکوفه‌ی روشن',meta:'#ffd9e6',bg:'linear-gradient(145deg,#fff1f5,#ff8fab 70%,#e8457c)'},
- {id:'gold',name:'۸. شب طلایی',meta:'#07070d',bg:'radial-gradient(circle at 65% 65%,#f2b84b,transparent 58%),#0d0c18'},
- {id:'lavender',name:'۹. اطلسی روشن',meta:'#e0d6ff',bg:'linear-gradient(145deg,#f3efff,#a58bff 70%,#6a46e8)'},
- {id:'crimson',name:'۱۰. یاقوت سرخ',meta:'#080205',bg:'radial-gradient(circle at 65% 65%,#ff4560,transparent 58%),#12050a'}];
+const THEMES=[{id:'glass',name:'۱. شیشه‌ای تیره',meta:'#05060c',bg:'radial-gradient(circle at 30% 30%,#25d6f2,transparent 55%),radial-gradient(circle at 72% 72%,#8f5cff,transparent 55%),#0a0c18'},
+ {id:'neu',name:'۲. نئومورفیک مدرن',meta:'#e6e1d8',bg:'linear-gradient(145deg,#f4efe6,#d3cdc2)'},
+ {id:'synth',name:'۳. گرادیان غروب نئونی',meta:'#2a0a55',bg:'linear-gradient(160deg,#2a0a55,#ff2d95 62%,#ff9040)'},
+ {id:'forest',name:'۴. مات ارگانیک',meta:'#000000',bg:'radial-gradient(circle at 62% 62%,#10e88a,transparent 60%),#000'},
+ {id:'sakura',name:'۵. شکوفه‌ی روشن',meta:'#ffd9e6',bg:'linear-gradient(145deg,#fff1f5,#ff8fab 70%,#e8457c)'},
+ {id:'gold',name:'۶. شب طلایی',meta:'#07070d',bg:'radial-gradient(circle at 65% 65%,#f2b84b,transparent 58%),#0d0c18'},
+ {id:'lavender',name:'۷. اطلسی روشن',meta:'#e0d6ff',bg:'linear-gradient(145deg,#f3efff,#a58bff 70%,#6a46e8)'},
+ {id:'crimson',name:'۸. یاقوت سرخ',meta:'#080205',bg:'radial-gradient(circle at 65% 65%,#ff4560,transparent 58%),#12050a'}];
 const EMO=['❤️','👍','😂','😮','😢','🔥'];
 const TRAY=['😀','😂','🥰','😍','😎','🤔','😅','😭','🙏','👍','👏','🔥','❤️','✨','🎉','🌹','☕','🎧','📷','💡','😴','🤝','🥳','😉','👋','💪','🌙','🍉','⚽','🎮','📚','🚀'];
 
@@ -1118,8 +953,7 @@ const Snd=(()=>{let ctx=null,master=null,noise=null;
       s.connect(f);f.connect(g);g.connect(master);s.start(n);s.stop(n+.55)}}})();
 
 /* ================= state ================= */
-const SYS=()=>{try{return matchMedia('(prefers-color-scheme: dark)').matches?'ocean':'white'}catch(e){return 'white'}};
-const S={theme:SYS(),device:'desktop',tab:'chats',active:null,filter:'all',q:'',sound:true,sim:true,mode:'desk',mobOpen:false,drawer:false,rec:null,replyTo:null,ctx:null,sending:false,dtab:'media'};
+const S={theme:'glass',device:'desktop',tab:'chats',active:null,filter:'all',q:'',sound:true,sim:true,mode:'desk',mobOpen:false,drawer:false,rec:null,replyTo:null,ctx:null,sending:false,dtab:'media'};
 const prefs=store.get();
 if(prefs.theme&&THEMES.some(t=>t.id===prefs.theme))S.theme=prefs.theme;
 if(prefs.sound===false)S.sound=false;
@@ -1138,6 +972,7 @@ const snipH=(m,f)=>{const n=snipIc(m);return (n?ic(n,'pvi'):'')+emo(f(snip(m)))}
 const first=c=>c.name.split(' ')[0];
 $$('[data-ic]').forEach(el=>el.innerHTML=ic(el.dataset.ic));
 $('#logo').innerHTML=ic('logo').replace('class="i "','class="i" style="width:28px;height:28px"');
+$('#railTheme').innerHTML=ic('contrast');
 act.innerHTML=ic('mic','ic ic-mic')+ic('send','ic ic-send')+ic('spin','ic ic-spin')+ic('stop','ic ic-stop');
 
 const toast=txt=>{const t=document.createElement('div');t.className='toast';t.textContent=txt;$('#toasts').appendChild(t);
@@ -1148,10 +983,9 @@ function refreshWave(){const cs=getComputedStyle(body);const g=n=>cs.getProperty
   WC.me={on:g('--wv-me-on'),off:g('--wv-me-off')};WC.th={on:g('--wv-th-on'),off:g('--wv-th-off')};
   voices.forEach(v=>drawVoice(v,performance.now()/1000))}
 const WC={me:{on:'#fff',off:'#fff8'},th:{on:'#0ff',off:'#fff5'}};
-const GATED=!!$('#gate');
 function paintTheme(){
-  if(!GATED){body.dataset.theme=S.theme;
-  $('#metaTheme').content=THEMES.find(t=>t.id===S.theme).meta}
+  body.dataset.theme=S.theme;
+  $('#metaTheme').content=THEMES.find(t=>t.id===S.theme).meta;
   $$('.td').forEach(b=>b.classList.toggle('on',b.dataset.t===S.theme));
   $$('.tcard').forEach(b=>b.classList.toggle('on',b.dataset.t===S.theme));
   refreshWave();
@@ -1170,6 +1004,7 @@ function setTheme(id,ev){
 }
 $('#themeDots').innerHTML=THEMES.map(t=>`<button class="td" data-t="${t.id}" aria-label="${t.id}" style="background:${t.bg}"></button>`).join('');
 $('#themeDots').addEventListener('click',e=>{const b=e.target.closest('.td');if(b)setTheme(b.dataset.t,e)});
+$('#railTheme').addEventListener('click',e=>{const i=THEMES.findIndex(t=>t.id===S.theme);setTheme(THEMES[(i+1)%THEMES.length].id,e)});
 
 /* sound toggle */
 function paintSound(){$('#soundBtn').innerHTML=ic(S.sound?'vol':'volx');$$('[data-sw=sound]').forEach(s=>s.classList.toggle('on',S.sound))}
@@ -1231,13 +1066,12 @@ function syncNav(){
 /* ================= views ================= */
 $('#views').innerHTML=`
 <section class="view on" data-v="chats">
-  <div class="topbar"><button type="button" class="ib rnd" id="rnd" aria-label="تم تصادفی" title="تم تصادفی">${ic('palette')}</button><label class="search" id="search">${ic('search')}<input id="q" placeholder="جستجو" autocomplete="off" spellcheck="false"><button class="clr" id="qc" aria-label="پاک‌کردن" type="button">${ic('x')}</button></label></div>
+  <label class="search" id="search">${ic('search')}<input id="q" placeholder="جستجو" autocomplete="off" spellcheck="false"><button class="clr" id="qc" aria-label="پاک‌کردن" type="button">${ic('x')}</button></label>
   <div class="vscroll" id="clist"></div>
 </section>
 <section class="view" data-v="calls"><div class="vhead"><div><h1 class="vtitle">تماس‌ها</h1><div class="vsub">تاریخچهٔ تماس‌های اخیر</div></div></div><div class="vscroll" id="callList"></div></section>
 <section class="view" data-v="contacts"><div class="vhead"><div><h1 class="vtitle">مخاطبین</h1><div class="vsub" id="ctSub">${fa(CONTACTS.filter(c=>!c.self).length)} مخاطب</div></div></div><div class="vscroll" id="contactList"></div></section>
 <section class="view" data-v="settings"><div class="vhead"><div><h1 class="vtitle">تنظیمات</h1><div class="vsub">ظاهر و رفتار برنامه</div></div></div><div class="vscroll" id="setList"></div></section>`;
-$('#rnd').addEventListener('click',e=>{const b=e.currentTarget,o=THEMES.filter(t=>t.id!==S.theme);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');setTheme(pick(o).id,e)});
 const clist=$('#clist'),qEl=$('#q'),itemEls=new Map();
 const emptyEl=document.createElement('div');emptyEl.className='empty';emptyEl.hidden=true;
 const userRes=document.createElement('div');userRes.className='ci ru';userRes.hidden=true;
@@ -1354,15 +1188,24 @@ renderContacts();
 $('#contactList').addEventListener('click',e=>{const el=e.target.closest('[data-ct]');if(el){setTab('chats',true);openChat(el.dataset.ct)}});
 $('#setList').innerHTML=`
 <div class="set-card"><div class="me-card"><button type="button" id="avPick" aria-label="تغییر عکس پروفایل" style="position:relative;flex:none;border-radius:50%"><div class="av" id="meAv" style="--s:72px"><img alt="" src="${meAvSrc()}"></div><span style="position:absolute;bottom:-2px;inset-inline-end:-2px;width:26px;height:26px;border-radius:50%;background:var(--grad);color:var(--on-grad);display:grid;place-items:center;box-shadow:var(--sh-2)">${ic('plus')}</span></button><div><b>${esc(ME_NAME)}</b><div id="meUser" style="direction:ltr;text-align:start;color:var(--dim);font-size:13.5px;margin-top:2px">${ME_USER?'@'+ME_USER:''}</div></div></div></div>
+<div class="set-card"><h3>نام کاربری</h3><label class="g-field" id="sUserField" style="margin-top:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M15.6 12v1.3a2.6 2.6 0 0 0 5.2 0V12a8.8 8.8 0 1 0-3.5 7"/></svg><input id="sUser" type="text" dir="ltr" placeholder="نام کاربری" maxlength="20" autocapitalize="none" autocomplete="off" spellcheck="false" style="text-align:start" value="${ME_USER}"></label><div class="g-err" id="sUserErr"></div></div>
 <div class="set-card"><div class="theme-grid${THEMES.findIndex(t=>t.id===S.theme)>=4?'':' collapsed'}" id="themeGrid">${THEMES.map((t,i)=>`<button class="tcard${i>=4?' tmore':''}" data-t="${t.id}"><div class="pvb" style="background:${t.bg}"><i style="top:14px;inset-inline-start:10px;width:52%;background:rgba(255,255,255,.35)"></i><i style="top:34px;inset-inline-end:10px;width:44%;background:rgba(0,0,0,.35)"></i></div></button>`).join('')}</div><button type="button" class="avs-b" id="moreThemes" style="margin-top:12px">${THEMES.findIndex(t=>t.id===S.theme)>=4?'نمایش کمتر':'تم‌های بیشتر'}</button></div>
 <div class="set-card"><h3>عمومی</h3>
 <div class="trow"><div>افکت صوتی</div><button class="switch" data-sw="sound" aria-label="صدا"></button></div></div>
 <div class="set-card"><button type="button" class="avs-b dng" id="logoutBtn">خروج از حساب کاربری</button></div>`;
+(function(){const inp=$('#sUser'),fl=$('#sUserField'),er=$('#sUserErr');let cur=ME_USER;
+  inp.addEventListener('input',()=>{inp.value=inp.value.replace(/[^A-Za-z0-9_]/g,'');fl.classList.remove('err');er.textContent=''});
+  function commit(){const v=inp.value.trim();if(v===cur)return;
+    if(!/^[A-Za-z][A-Za-z0-9_]{2,19}$/.test(v)){er.textContent='نام کاربری باید ۳ تا ۲۰ حرف انگلیسی، عدد یا _ باشه و با حرف شروع بشه';fl.classList.remove('err');void fl.offsetWidth;fl.classList.add('err');return}
+    try{const u=JSON.parse(localStorage.getItem('mowj.user')||'{}');u.username=v;localStorage.setItem('mowj.user',JSON.stringify(u))}catch(e){}
+    cur=v;$('#meUser').textContent='@'+v;er.textContent='';Snd.click()}
+  inp.addEventListener('change',commit);inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();commit();inp.blur()}})})();
 $('#setList').addEventListener('click',e=>{
   if(e.target.closest('#moreThemes')){const g=$('#themeGrid'),b=$('#moreThemes');g.classList.toggle('collapsed');b.textContent=g.classList.contains('collapsed')?'تم‌های بیشتر':'نمایش کمتر';Snd.click();return}
   if(e.target.closest('#logoutBtn')){
     if(!confirm('از حساب کاربری خارج می‌شوی؟ چت‌های ذخیره‌شده روی این دستگاه پاک می‌شود.'))return;
-    try{window.MOWJ.logout()}catch(_){}
+    try{Object.keys(localStorage).forEach(k=>{if(k.indexOf('mowj.')===0&&k!=='mowj.prefs')localStorage.removeItem(k)})}catch(_){}
+    try{indexedDB.deleteDatabase('mowj-media')}catch(_){}
     try{Storage.prototype.setItem=function(){}}catch(_){}
     setTimeout(()=>location.reload(),150);return}
   const t=e.target.closest('.tcard');if(t)return setTheme(t.dataset.t,e);
@@ -1803,9 +1646,8 @@ $('#fab').addEventListener('click',openSheet);
 const callEl=$('#call');
 const ME_ID=(function(){try{const u=JSON.parse(localStorage.getItem('mowj.user')||'{}');return u&&!u.local&&/^\d+$/.test(String(u.id))?+u.id:0}catch(e){return 0}})();
 /* برای شبکه‌های سخت (بعضی اینترنت‌های موبایل) می‌توانی TURN اضافه کنی: window.MOWJ_ICE_SERVERS=[{urls:'turn:...',username:'..',credential:'..'}] */
-const ICE_CFG={iceServers:window.MOWJ_ICE_SERVERS||[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']},{urls:['turn:openrelay.metered.ca:80','turn:openrelay.metered.ca:443','turn:openrelay.metered.ca:443?transport=tcp','turns:openrelay.metered.ca:443'],username:'openrelayproject',credential:'openrelayproject'}],iceCandidatePoolSize:4};
-const PREF=String(SB_URL).replace(/^https?:\/\//,'').split('.')[0].toLowerCase().replace(/[^a-z0-9]/g,'');
-const pidOf=u=>'mowj-'+PREF+'-'+String(u).replace('@','').toLowerCase();
+const ICE_CFG={iceServers:window.MOWJ_ICE_SERVERS||[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']}]};
+const pidOf=u=>'mowj-'+String(u).replace('@','').toLowerCase();
 let CALL=null,PEER=null,peerReady=false,idTry=0;
 const durTxt=s=>fa(pad(Math.floor(s/60))+':'+pad(s%60));
 const callSt=t=>{const p=$('#callSt');if(p)p.textContent=t};
@@ -1895,7 +1737,7 @@ function initPeer(){
     if(e.type==='peer-unavailable'){if(CALL&&CALL.dir==='out'&&CALL.state==='calling'&&!CALL.demo&&!CALL.opened)endCall('offline',false)}
     else if(e.type==='unavailable-id'){PEER=null;peerReady=false;try{pr.destroy()}catch(_){}
       if(++idTry<=12)setTimeout(initPeer,4000);else toast('این حساب در تب یا دستگاه دیگری باز است؛ پیام و تماس ورودی اینجا فعال نیست')}
-    else{peerReady=false;if(!window._pe||Date.now()-window._pe>15000){window._pe=Date.now();toast('سرویس تماس وصل نشد ('+e.type+')؛ اینترنت یا فیلترشکن را چک کن')}setTimeout(()=>{if(PEER!==pr)return;try{if(pr.destroyed){PEER=null;initPeer()}else if(pr.disconnected)pr.reconnect()}catch(_){}},4000)}});
+    else{peerReady=false;setTimeout(()=>{if(PEER!==pr)return;try{if(pr.destroyed){PEER=null;initPeer()}else if(pr.disconnected)pr.reconnect()}catch(_){}},4000)}});
   pr.on('connection',conn=>{if(conn.label==='chat'){conn.on('data',d=>onChatData(conn,d));return}conn.on('data',d=>onCtrl(conn,d));conn.on('close',()=>onCtrlClose(conn))});
   pr.on('call',mc=>{const cl=CALL;
     if(cl&&cl.dir==='in'&&cl.state==='connecting'&&cl.local&&mc.peer===cl.pid){cl.mc=mc;bindMC(cl,mc);mc.answer(cl.local)}
@@ -1909,8 +1751,7 @@ async function startCall(c,video){
     const cl=CALL=newCall(c,'out',video);cl.demo=true;renderCall();callSt('در حال برقراری تماس…');ringLoop(cl);
     toast('این مخاطب نمونه است؛ تماس واقعی فقط با کاربران ثبت‌شده (جستجوی نام کاربری)');
     cl.noAns=setTimeout(()=>{if(CALL===cl)onConnected()},2400);return}
-  if(!window.isSecureContext){toast('تماس فقط روی آدرس HTTPS کار می‌کند (فایل را روی هاست بگذار)');return}
-  if(typeof Peer==='undefined'){toast('کتابخانه‌ی تماس (PeerJS) لود نشد؛ اینترنت یا فیلترشکن را چک کن');return}
+  if(typeof Peer==='undefined'){toast('سرویس تماس بارگذاری نشد؛ اینترنت را بررسی کن');return}
   if(!PEER)initPeer();
   if(!PEER||!peerReady){toast('در حال اتصال به سرویس تماس… چند ثانیه بعد دوباره امتحان کن');return}
   const cl=CALL=newCall(c,'out',video);cl.pid=pidOf(c.user);renderCall();callSt('در حال آماده‌سازی…');
@@ -1969,7 +1810,6 @@ async function sbSend(c,m){
   try{await sbPost(c,m);setTicks(m,'sent');updateList()}
   catch(e){
     if(e&&e.skip){toast(e.message==='big'?'فایل بزرگ‌تر از ۴ مگابایت ارسال نمی‌شود':'فایل در دسترس نیست');setTicks(m,'sent');return}
-    if(/http (401|403)/.test(String(e&&e.message))){toast('اجازه ارسال نیست؛ از تنظیمات خارج شو و دوباره وارد شو ('+e.message.slice(5)+')')}
     sbQ.push([c,m]);if(!c._sbWarn){c._sbWarn=1;toast('اتصال برقرار نیست؛ پیام بعداً فرستاده می‌شود')}}}
 async function sbRetry(){
   if(!sbQ.length)return;const q=sbQ;sbQ=[];
