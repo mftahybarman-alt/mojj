@@ -680,28 +680,14 @@ inp.addEventListener('input',clr);
 uinp.addEventListener('input',function(){uinp.value=uinp.value.replace(/[^A-Za-z0-9_]/g,'');clr()});
 function finish(u){try{localStorage.setItem('mowj.user',JSON.stringify(u))}catch(_){}
   gate.classList.add('bye');setTimeout(function(){location.reload()},450)}
-var SB_URL='https://qhmscabixzvpvionvnzy.supabase.co';
-var SB_KEY='sb_publishable_8lUhmtLmHF-vHhpA-wwAAA_sX5AgZGZ';
-async function submit(){
+function submit(){
   var name=inp.value.trim().replace(/\s+/g,' ');
   if(name.length<2)return showErr('اسم باید حداقل ۲ حرف باشه');
   if(name.length>30)return showErr('اسم نباید بیشتر از ۳۰ حرف باشه');
   var uname=uinp.value.trim();
   if(!/^[A-Za-z][A-Za-z0-9_]{2,19}$/.test(uname))return showErr('نام کاربری باید ۳ تا ۲۰ حرف انگلیسی، عدد یا _ باشه و با حرف شروع بشه',ufld);
   go.classList.add('load');go.disabled=true;
-  try{
-    var r=await fetch(SB_URL+'/rest/v1/mowj_users',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Prefer':'return=representation'},body:JSON.stringify({name:name,username:uname})});
-    if(r.status===409){showErr('این نام کاربری قبلاً گرفته شده',ufld);go.classList.remove('load');go.disabled=false;return}
-    if(!r.ok){var et=await r.text().catch(function(){return''});var em='';try{em=JSON.parse(et).message||''}catch(_){}
-      throw new Error('کد '+r.status+(em?' — '+em:''))}
-    var d=await r.json().catch(function(){return null});
-    var row=Array.isArray(d)?d[0]:null;
-    if(!row)throw new Error('پاسخ خالی از دیتابیس');
-    finish({id:row.id,name:row.name,username:row.username||uname});
-  }catch(e){
-    showErr('حساب ساخته نشد، به دیتابیس وصل نشد ('+(e&&e.message?e.message:'خطای شبکه')+')',fld);
-    go.classList.remove('load');go.disabled=false;
-  }
+  finish({name:name,username:uname,local:true});
 }
 go.addEventListener('click',submit);
 inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();uinp.focus()}});
@@ -826,7 +812,6 @@ const fmtDur=s=>{s=Math.max(0,Math.round(s));return fa(Math.floor(s/60)+':'+pad(
 const NM={'ي':'ی','ك':'ک','ة':'ه','أ':'ا','إ':'ا','ۀ':'ه'};
 const norm=s=>String(s).toLowerCase().replace(/[يكةأإۀ]/g,c=>NM[c]).replace(/[۰-۹]/g,c=>String(c.charCodeAt(0)-1776)).replace(/[٠-٩]/g,c=>String(c.charCodeAt(0)-1632));
 const hl=(text,q)=>{if(!q)return esc(text);const i=norm(text).indexOf(q);if(i<0)return esc(text);return esc(text.slice(0,i))+'<mark>'+esc(text.slice(i,i+q.length))+'</mark>'+esc(text.slice(i+q.length))};
-const SB_URL='https://qhmscabixzvpvionvnzy.supabase.co',SB_KEY='sb_publishable_8lUhmtLmHF-vHhpA-wwAAA_sX5AgZGZ';
 const ME_USER=(function(){try{return String(JSON.parse(localStorage.getItem('mowj.user')||'{}').username||'').replace(/[^A-Za-z0-9_]/g,'')}catch(e){return ''}})();
 const ME_NAME=(function(){try{return String(JSON.parse(localStorage.getItem('mowj.user')||'{}').name||'شما').replace(/[<>&"'`]/g,'')||'شما'}catch(e){return 'شما'}})();
 let ME_AV=(function(){try{const o=JSON.parse(localStorage.getItem('mowj.avatar')||'null');const ok=v=>typeof v==='string'&&/^data:image\/jpeg;base64,/.test(v);return o&&ok(o.l)&&ok(o.s)?o:null}catch(e){return null}})();
@@ -1158,13 +1143,9 @@ function hideRemote(){remote=null;if(!userRes.hidden){userRes.hidden=true;update
 function findRemote(){
   clearTimeout(remoteTimer);const my=++remoteSeq,q=S.q.trim().replace(/^@/,'');
   if(!UNAME.test(q)||q.toLowerCase()===ME_USER.toLowerCase()||CONTACTS.some(c=>c.user&&c.user.replace('@','').toLowerCase()===q.toLowerCase()))return hideRemote();
-  remoteTimer=setTimeout(async()=>{
-    let u=null;const nob={id:'p_'+q.toLowerCase(),name:q,username:q};
-    try{const r=await fetch(SB_URL+'/rest/v1/mowj_users?select=id,name,username&limit=1&username=ilike.'+encodeURIComponent(q.replace(/_/g,'\\_')),{headers:{'apikey':SB_KEY}});if(my!==remoteSeq)return;
-      if(r.ok){const d=await r.json();const row=Array.isArray(d)?d.find(x=>x&&String(x.username).toLowerCase()===q.toLowerCase()):null;u=row||null}
-      else{u=null;toast('خطا در جستجو (کد '+r.status+')')}}
-    catch(e){u=null;toast('جستجو انجام نشد؛ اینترنت یا دیتابیس مشکل دارد')}
-    if(my!==remoteSeq)return;if(!u)return hideRemote();
+  remoteTimer=setTimeout(()=>{
+    if(my!==remoteSeq)return;
+    const u={id:'p_'+q.toLowerCase(),name:q,username:q};
     const c=mkRemote(u);remote=u;
     userRes.innerHTML=`${avHTML(c,54)}<div class="cb"><div class="row1"><span class="nm">${esc(u.name)}</span></div><div class="row2"><div class="pv"><span dir="ltr">@${esc(u.username)}</span></div></div></div>`;
     userRes.hidden=false;emptyEl.hidden=true;
@@ -1786,62 +1767,7 @@ $('#callBtn').addEventListener('click',()=>startCall(cur(),false));
 /* ================= پیام واقعی (متن/ویس/عکس/فایل) روی کانال داده‌ی PeerJS ================= */
 const SEEN=new Set((function(){try{const a=JSON.parse(localStorage.getItem('mowj.seen')||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}})()),NET_MAX=4*1048576;
 const cleanUn=s=>String(s||'').replace(/[^A-Za-z0-9_]/g,'').slice(0,20);
-function netSend(c,m){if(cleanUn(c.user)){sbSend(c,m);return}(c._out=c._out||[]).push(m);flushOut(c)}
-/* ===== پیام متنی از طریق Supabase (حتی اگر طرف مقابل آنلاین نباشد می‌رسد) ===== */
-const SB_LAST_KEY='mowj.sbLast.'+String(ME_USER).toLowerCase();
-let sbLast=+(localStorage.getItem(SB_LAST_KEY)||0)||0,sbBusy=false,sbQ=[];
-const b64OfBlob=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
-const blobOfB64=(t,mime)=>{const bin=atob(t),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:mime||''})};
-async function sbPost(c,m){
-  const row={mid:m.mid,from_user:ME_USER,from_name:ME_NAME,to_user:cleanUn(c.user).toLowerCase(),type:m.type,body:String(m.type==='text'?m.text:(m.cap||m.text||'')).slice(0,4000)};
-  if(m.type!=='text'){
-    const b=m.fid?(BLOBS[m.fid]||await mdb.get(m.fid).catch(()=>null)):null;
-    if(!b)throw Object.assign(new Error('nofile'),{skip:1});
-    if(b.size>NET_MAX)throw Object.assign(new Error('big'),{skip:1});
-    row.media=await b64OfBlob(b);
-    row.meta={dur:m.dur,wave:m.wave,w:m.w,h:m.h,name:m.name,size:b.size,mime:m.mime||b.type||''}}
-  const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),90000);
-  try{
-    const r=await fetch(SB_URL+'/rest/v1/mowj_messages',{method:'POST',signal:ac.signal,headers:{'Content-Type':'application/json','apikey':SB_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)});
-    if(r.ok||r.status===409)return true;
-    throw new Error('http '+r.status)
-  }finally{clearTimeout(tm)}}
-async function sbSend(c,m){
-  try{await sbPost(c,m);setTicks(m,'sent');updateList()}
-  catch(e){
-    if(e&&e.skip){toast(e.message==='big'?'فایل بزرگ‌تر از ۴ مگابایت ارسال نمی‌شود':'فایل در دسترس نیست');setTicks(m,'sent');return}
-    sbQ.push([c,m]);if(!c._sbWarn){c._sbWarn=1;toast('اتصال برقرار نیست؛ پیام بعداً فرستاده می‌شود')}}}
-async function sbRetry(){
-  if(!sbQ.length)return;const q=sbQ;sbQ=[];
-  for(const [c,m] of q){try{await sbPost(c,m);setTicks(m,'sent');c._sbWarn=0}catch(e){if(!(e&&e.skip))sbQ.push([c,m])}}
-  updateList()}
-async function sbPoll(){
-  if(sbBusy||!ME_USER||document.hidden)return;sbBusy=true;
-  try{
-    const r=await fetch(SB_URL+'/rest/v1/mowj_messages?select=id,mid,from_user,from_name,body,type,media,meta&order=id.asc&limit=30&to_user=eq.'+encodeURIComponent(String(ME_USER).toLowerCase())+'&id=gt.'+sbLast,{headers:{'apikey':SB_KEY}});
-    if(!r.ok)return;const rows=await r.json();
-    if(!Array.isArray(rows))return;
-    for(const x of rows){
-      sbLast=Math.max(sbLast,+x.id||0);
-      const un=cleanUn(x.from_user);if(!un||!x.mid||SEEN.has(x.mid))continue;
-      SEEN.add(x.mid);
-      const c=contactFor({name:x.from_name||un,username:un});
-      const ty=['text','voice','img','file'].includes(x.type)?x.type:'text';
-      if(ty==='text'||!x.media){const t=String(x.body||'').slice(0,4000);if(t)deliver(c,t);continue}
-      const mt=x.meta&&typeof x.meta==='object'?x.meta:{};
-      const blob=blobOfB64(x.media,String(mt.mime||''));
-      const fid=(ty==='voice'?'v':'f')+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-      URLS[fid]=URL.createObjectURL(blob);BLOBS[fid]=blob;mdb.put(fid,blob).catch(()=>{});
-      const p={type:ty,fid,mime:blob.type,size:blob.size};
-      if(ty==='voice'){p.dur=clamp(+mt.dur||1,1,600);p.wave=Array.isArray(mt.wave)&&mt.wave.length===32?mt.wave.map(v=>clamp(+v||.3,.1,1)):genWave(MID*7)}
-      else if(ty==='img'){p.w=+mt.w||0;p.h=+mt.h||0;p.cap=String(x.body||'').slice(0,1000)}
-      else{p.name=String(mt.name||'file').slice(0,120)}
-      deliver(c,p)}
-    try{localStorage.setItem(SB_LAST_KEY,String(sbLast));localStorage.setItem('mowj.seen',JSON.stringify([...SEEN].slice(-1000)))}catch(e){}
-    if(rows.length>=30)setTimeout(sbPoll,50)
-  }catch(e){}finally{sbBusy=false}}
-setInterval(sbPoll,2500);setInterval(sbRetry,6000);sbPoll();
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)sbPoll()});
+function netSend(c,m){(c._out=c._out||[]).push(m);flushOut(c)}
 function chatConn(c){
   if(c._ch&&c._ch.open)return c._ch;
   if(c._chPending||!PEER||!peerReady)return null;
@@ -1876,6 +1802,10 @@ function onChatData(conn,d){
   if(d.t==='msg'&&d.from&&d.m){
     const un=cleanUn(d.from.username);if(!un)return;
     const c=contactFor({uid:d.from.uid,name:d.from.name,username:un});
+    {const nn=String(d.from.name||'').replace(/[<>&"'`]/g,'').slice(0,30);
+      if(nn&&c.rid&&c.name!==nn){c.name=nn;
+        try{const a=JSON.parse(localStorage.getItem(FOUND_KEY)||'[]');a.forEach(x=>{if(x&&String(x.username).toLowerCase()===un.toLowerCase())x.name=nn});localStorage.setItem(FOUND_KEY,JSON.stringify(a))}catch(e){}
+        renderContacts();updateList();if(S.active===c.id)renderHead(c)}}
     if(d.from.av==='')setPeerAv(c,null);else if(AV_OK(d.from.av))setPeerAv(c,d.from.av);
     if(c._ch!==conn){c._ch=conn;conn.on('close',()=>{if(c._ch===conn)c._ch=null})}
     const seen=S.active===c.id&&!document.hidden;
