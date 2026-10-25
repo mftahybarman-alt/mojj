@@ -641,12 +641,22 @@ button,input,textarea,select{font-family:inherit}
 .pv span .i,.quote span .i,.banner span .i{display:inline-block;width:15px;height:15px;vertical-align:-3px;margin-inline-end:5px}
 .theme-grid.collapsed .tmore{display:none}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
 var U='https://qhmscabixzvpvionvnzy.supabase.co',K='sb_publishable_8lUhmtLmHF-vHhpA-wwAAA_sX5AgZGZ',SK='sb-qhmscabixzvpvionvnzy-auth-token',tok=null;
-try{window.sb=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){window.sb=null}
-if(window.sb)window.sb.auth.onAuthStateChange(function(_e,se){tok=se&&se.access_token||null});
+window.sb=null;
+var srcs=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2','https://unpkg.com/@supabase/supabase-js@2'];
+window.sbReady=new Promise(function(res){
+  function init(){try{window.sb=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    window.sb.auth.onAuthStateChange(function(_e,se){tok=se&&se.access_token||null});res(true)}catch(e){res(false)}}
+  if(window.supabase)return init();
+  var i=0;function next(){if(i>=srcs.length)return res(false);
+    var sc=document.createElement('script'),t;sc.async=true;sc.src=srcs[i++];
+    t=setTimeout(function(){sc.onload=sc.onerror=null;next()},8000);
+    sc.onload=function(){clearTimeout(t);init()};sc.onerror=function(){clearTimeout(t);next()};
+    document.head.appendChild(sc)}
+  next();
+});
 function gt(){if(tok)return tok;try{var o=JSON.parse(localStorage.getItem(SK)||'null');return o&&o.access_token||null}catch(e){return null}}
 var of=window.fetch.bind(window);
 window.fetch=function(i,o){var u='';try{u=typeof i==='string'?i:(i&&i.url)||''}catch(e){}
@@ -734,14 +744,16 @@ function show(n){steps.forEach(function(id,i){$g(id).hidden=(i!==n-1)});var t=do
 function err(n,m,f){var e=$g('gErr'+n);e.textContent=m||'';if(f){f.classList.remove('err');void f.offsetWidth;f.classList.add('err')}}
 function clr(){document.querySelectorAll('.g-field.err').forEach(function(f){f.classList.remove('err')});[1,2,3].forEach(function(n){$g('gErr'+n).textContent=''})}
 function busy(b,on){b.classList.toggle('load',on);b.disabled=on}
+function withT(p,ms){return Promise.race([p,new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'))},ms||25000)})]).catch(function(e){return{error:e}})}
 function nice(e){var m=String(e&&e.message||e||'');
+  if(/timeout/.test(m))return 'سرور جواب نداد؛ اینترنت/فیلترشکن یا تنظیم ایمیل Supabase رو چک کن';
   if(/signups? not allowed|not found|user.*not/i.test(m))return 'حسابی با این ایمیل پیدا نشد؛ از «ثبت‌نام» شروع کن';
   if(/rate|limit|security purposes|too many/i.test(m))return 'تعداد درخواست‌ها زیاد بود، کمی بعد دوباره امتحان کن';
   if(/expired|invalid|token/i.test(m))return 'کد اشتباهه یا منقضی شده';
   if(/taken/.test(m))return 'این نام کاربری قبلاً گرفته شده';
-  if(/fetch|network/i.test(m))return 'اتصال برقرار نشد';
+  if(/fetch|network/i.test(m))return 'اتصال برقرار نشد ('+m.slice(0,90)+' | '+location.protocol+')';
   return m||'خطای ناشناخته'}
-if(!window.sb){$g('gErr1').textContent='کتابخانه ورود لود نشد؛ اینترنت یا فیلترشکن رو چک کن'}
+sbReady.then(function(ok){if(!ok)$g('gErr1').textContent='کتابخانه ورود لود نشد؛ اینترنت یا فیلترشکن رو چک کن'});
 function finish(u){try{localStorage.setItem('mowj.user',JSON.stringify(u))}catch(_){}
   gate.classList.add('bye');setTimeout(function(){location.reload()},450)}
 async function afterAuth(se){
@@ -764,8 +776,8 @@ $g('gTabs').addEventListener('click',function(e){var b=e.target.closest('button'
 async function sendCode(btn){
   var v=$g('gEmail').value.trim().toLowerCase();
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))return err(1,'ایمیل معتبر نیست',$g('gEmailF'));
-  if(!sb)return;clr();busy(btn,true);
-  var r=await sb.auth.signInWithOtp({email:v,options:{shouldCreateUser:mode==='signup'}});
+  if(!window.sb)return err(btn===$g('gSend')?1:2,'ورود هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');clr();busy(btn,true);
+  var r=await withT(sb.auth.signInWithOtp({email:v,options:{shouldCreateUser:mode==='signup'}}));
   busy(btn,false);
   if(r.error)return err(btn===$g('gSend')?1:2,nice(r.error));
   email=v;$g('gMail').textContent=v;show(2);cool();$g('gCode').value='';setTimeout(function(){$g('gCode').focus()},200);
@@ -781,8 +793,8 @@ $g('gCode').addEventListener('input',function(){this.value=this.value.replace(/\
 async function verify(){
   var c=$g('gCode').value.trim();
   if(c.length<6)return err(2,'کد را کامل وارد کن',$g('gCodeF'));
-  if(!sb)return;clr();busy($g('gVerify'),true);
-  var r=await sb.auth.verifyOtp({email:email,token:c,type:'email'});
+  if(!window.sb)return err(2,'ورود هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');clr();busy($g('gVerify'),true);
+  var r=await withT(sb.auth.verifyOtp({email:email,token:c,type:'email'}));
   busy($g('gVerify'),false);
   if(r.error||!r.data||!r.data.session)return err(2,nice(r.error||'کد اشتباهه'),$g('gCodeF'));
   afterAuth(r.data.session);
@@ -800,8 +812,8 @@ async function submit(){
   if(name.length<2)return err(3,'اسم باید حداقل ۲ حرف باشه',fld);
   var uname=uinp.value.trim();
   if(!/^[A-Za-z][A-Za-z0-9_]{2,19}$/.test(uname))return err(3,'نام کاربری باید ۳ تا ۲۰ حرف انگلیسی، عدد یا _ باشه و با حرف شروع بشه',ufld);
-  if(!sb)return;clr();busy(go,true);
-  var r=await sb.rpc('mowj_register',{p_name:name,p_username:uname});
+  if(!window.sb)return err(3,'ورود هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');clr();busy(go,true);
+  var r=await withT(sb.rpc('mowj_register',{p_name:name,p_username:uname}));
   busy(go,false);
   if(r.error)return err(3,nice(r.error),/taken/.test(r.error.message||'')?ufld:fld);
   var row=r.data;var se=(await sb.auth.getSession()).data.session;
@@ -812,7 +824,7 @@ go.addEventListener('click',submit);
 inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();uinp.focus()}});
 uinp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submit()}});
 /* اگر سشن وجود دارد (مثلاً برگشت از گوگل) */
-if(window.sb){sb.auth.getSession().then(function(r){var se=r&&r.data&&r.data.session;if(se)afterAuth(se)})}
+sbReady.then(function(ok){if(ok)sb.auth.getSession().then(function(r){var se=r&&r.data&&r.data.session;if(se)afterAuth(se)})});
 setTimeout(function(){if(!$g('gS1').hidden)$g('gEmail').focus()},300);
 })();
 </script>
