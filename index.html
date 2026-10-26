@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
 <meta name="theme-color" content="#05060c" id="metaTheme">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,7 +112,8 @@ body[data-theme=crimson]{
 /* ============ BASE ============ */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html,body{height:100%;overflow:hidden}
+html,body{height:100%;overflow:hidden;max-width:100%;overscroll-behavior:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{position:fixed;inset:0;width:100%}
 body{font-family:var(--font);background:var(--page-bg);color:var(--text);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
 input,textarea{font:inherit;color:inherit;border:0;outline:0;background:none}
@@ -575,11 +576,11 @@ body[data-device=android] .statusbar{padding:0 22px 8px;font-size:13px;font-weig
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 /* ============ SIGNUP GATE ============ */
-#gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px 16px;background:var(--page-bg);overflow:auto;transition:opacity .5s,transform .6s var(--ios)}
+#gate{position:fixed;inset:0;z-index:1000;display:flex;padding:max(24px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom));background:var(--page-bg);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;transition:opacity .5s,transform .6s var(--ios)}
 #gate.bye{opacity:0;transform:scale(1.06);pointer-events:none}
-#gate .gbg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#gate .gbg{position:fixed;inset:0;overflow:hidden;pointer-events:none}
 #gate .gbg>i{position:absolute;border-radius:50%;opacity:var(--blob-o);will-change:transform}
-.g-card{position:relative;width:min(420px,100%);padding:34px 26px 28px;border-radius:30px;background:var(--noise),var(--solid);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);box-shadow:var(--sh-1),0 0 0 1px var(--line);display:flex;flex-direction:column;align-items:center;text-align:center;animation:fadeUp .7s var(--smooth)}
+.g-card{position:relative;flex:none;margin:auto;width:min(420px,100%);padding:34px 26px 28px;border-radius:30px;background:var(--noise),var(--solid);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);box-shadow:var(--sh-1),0 0 0 1px var(--line);display:flex;flex-direction:column;align-items:center;text-align:center;animation:fadeUp .7s var(--smooth)}
 .g-logo{width:68px;height:68px;border-radius:24px;background:var(--grad);display:grid;place-items:center;color:var(--on-grad);box-shadow:var(--glow);transition:transform .5s var(--spring)}
 .g-logo:hover{transform:rotate(-8deg) scale(1.08)}
 .g-logo svg{width:36px;height:36px}
@@ -613,13 +614,26 @@ body[data-device=android] .statusbar{padding:0 22px 8px;font-size:13px;font-weig
 .g-link{display:block;margin:6px auto 0;padding:8px 10px;font-size:13px;color:var(--dim)}
 .g-link[disabled]{opacity:.55;pointer-events:none}
 .g-sub b{color:var(--text);direction:ltr;unicode-bidi:embed}
-.g-otp{width:100%;margin-top:22px;display:flex;gap:8px;justify-content:center;direction:ltr}
-.g-otp input{flex:1;min-width:0;max-width:50px;height:64px;border:0;outline:0;border-radius:999px;background:var(--panel-2);box-shadow:var(--sh-in);text-align:center;font-size:24px;font-weight:800;color:var(--text);caret-color:var(--accent);padding:0;transition:box-shadow .3s,transform .35s var(--spring)}
-.g-otp input:focus{box-shadow:var(--sh-in),0 0 0 2px var(--accent),var(--glow);transform:translateY(-2px)}
-.g-otp input.f{box-shadow:var(--sh-in),0 0 0 1.5px var(--accent)}
-.g-otp.err input{box-shadow:var(--sh-in),0 0 0 2px var(--danger)}
+.g-otp{position:relative;width:100%;margin-top:22px;direction:ltr}
+.g-cells{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;pointer-events:none}
+.g-cells span{position:relative;height:60px;display:grid;place-items:center;border-radius:14px;background:var(--panel-2);box-shadow:var(--sh-in);font-size:22px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;transition:box-shadow .3s,transform .35s var(--spring),color .3s}
+.g-cells span.f{box-shadow:var(--sh-in),0 0 0 1.5px var(--accent)}
+.g-cells span.f::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--grad);opacity:.1}
+.g-cells span.on{box-shadow:var(--sh-in),0 0 0 2px var(--accent),var(--glow);transform:translateY(-2px)}
+.g-cells span.on:not(.f)::after{content:"";width:2px;height:26px;border-radius:2px;background:var(--accent);animation:gblink 1s steps(1) infinite}
+@keyframes gblink{50%{opacity:0}}
+/* ورودی واقعی: یک اینپوت نامرئی روی خونه‌ها (پشتیبانی کامل از کیبورد موبایل، پیست و پر شدن خودکار کد) */
+.g-otp-in{position:absolute;inset:0;width:100%;height:100%;opacity:0;z-index:2;font-size:16px;letter-spacing:0;text-align:start;color:transparent;caret-color:transparent;background:transparent;border:0;outline:0;padding:0;border-radius:18px;cursor:text;user-select:text;-webkit-user-select:text;-webkit-appearance:none;appearance:none}
+.g-otp.err .g-cells span{box-shadow:var(--sh-in),0 0 0 2px var(--danger);color:var(--danger)}
+.g-otp.err .g-cells span.f::before{background:var(--danger)}
 .g-otp.err{animation:gshake .4s}
-@media (max-width:360px){.g-otp{gap:5px}.g-otp input{height:58px;font-size:21px}}
+.g-otp.ok .g-cells span{box-shadow:var(--sh-in),0 0 0 2px var(--ok);color:var(--ok);transform:none}
+.g-otp.ok .g-cells span.f::before{background:var(--ok)}
+.g-otp.ok .g-cells span::after{display:none}
+.g-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:2px 6px;margin-top:6px}
+.g-row .g-link{margin:0}
+.g-row .g-dot{width:3px;height:3px;border-radius:50%;background:var(--dim);opacity:.5}
+@media (max-width:360px){.g-card{padding-left:16px;padding-right:16px}.g-cells{gap:4px}.g-cells span{height:52px;font-size:19px;border-radius:11px}}
 .tcard .pvb{margin-bottom:0;height:64px}#avPick .i{width:15px;height:15px}
 .avs{position:absolute;inset:0;z-index:90;display:grid;place-items:center;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
 .avs.on{opacity:1;visibility:visible;transition-delay:0s}
@@ -690,11 +704,13 @@ window.fetch=function(i,o){var u='';try{u=typeof i==='string'?i:(i&&i.url)||''}c
     </div>
     <div id="gS2" hidden>
       <div class="g-sub">کد به <b id="gMail"></b> فرستاده شد</div>
-      <div class="g-otp" id="gCodeF" dir="ltr"><input type="text" inputmode="numeric" autocomplete="one-time-code" aria-label="رقم 1"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 2"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 3"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 4"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 5"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 6"></div>
+      <div class="g-otp" id="gCodeF" dir="ltr">
+        <div class="g-cells" aria-hidden="true"></div>
+        <input id="gCode" class="g-otp-in" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" enterkeyhint="done" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="کد تأیید">
+      </div>
       <div class="g-err" id="gErr2"></div>
       <button class="g-go" id="gVerify" type="button"><span class="g-lbl">تأیید و ورود</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="g-spin"></span></button>
-      <button class="g-link" id="gResend" type="button">ارسال دوباره</button>
-      <button class="g-link" id="gBack" type="button">تغییر ایمیل</button>
+      <div class="g-row"><button class="g-link" id="gResend" type="button">ارسال دوباره</button><span class="g-dot"></span><button class="g-link" id="gBack" type="button">تغییر ایمیل</button></div>
     </div>
     <div id="gS3" hidden>
       <div class="g-sub">یه اسم و نام کاربری انتخاب کن</div>
@@ -776,41 +792,48 @@ async function sendCode(btn){
   var r=await withT(sb.auth.signInWithOtp({email:v,options:{shouldCreateUser:mode==='signup'}}));
   busy(btn,false);
   if(r.error)return err(btn===$g('gSend')?1:2,nice(r.error));
-  email=v;$g('gMail').textContent=v;show(2);cool();setCode('');setTimeout(function(){cells()[0].focus()},200);
+  email=v;$g('gMail').textContent=v;show(2);cool();setCode('');setTimeout(function(){codeIn.focus()},200);
 }
-function cool(){var b=$g('gResend'),n=61;clearInterval(resendT);b.disabled=true;
-  function tick(){if(n<=0){clearInterval(resendT);b.disabled=false;b.textContent='ارسال دوباره';return}b.textContent='ارسال دوباره ('+n--+')'}
+function faD(x){return String(x).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}
+function cool(){var b=$g('gResend'),n=60;clearInterval(resendT);b.disabled=true;
+  function tick(){if(n<0){clearInterval(resendT);b.disabled=false;b.textContent='ارسال دوباره';return}
+    b.textContent='ارسال دوباره ('+faD(Math.floor(n/60)+':'+('0'+n%60).slice(-2))+')';n--}
   tick();resendT=setInterval(tick,1000)}
 $g('gSend').addEventListener('click',function(){sendCode($g('gSend'))});
 $g('gEmail').addEventListener('input',clr);
 $g('gEmail').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendCode($g('gSend'))}});
 /* --- مرحله ۲: کد --- */
-var CL=6;
-function cells(){return $g('gCodeF').querySelectorAll('input')}
-function getCode(){return [].map.call(cells(),function(i){return i.value}).join('')}
-function setCode(v){[].forEach.call(cells(),function(i,k){i.value=v[k]||'';i.classList.toggle('f',!!i.value)})}
-function fillFrom(k,digits){var c=cells();for(var j=0;j<digits.length&&k+j<CL;j++){c[k+j].value=digits[j];c[k+j].classList.add('f')}
-  var nx=Math.min(k+digits.length,CL-1);c[nx].focus();if(getCode().length===CL)verify()}
-[].forEach.call(cells(),function(inp,k){
-  inp.addEventListener('input',function(){clr();var d=this.value.replace(/\D/g,'');
-    if(!d){this.value='';this.classList.remove('f');return}
-    this.value='';this.classList.remove('f');fillFrom(k,d)});
-  inp.addEventListener('keydown',function(e){var c=cells();
-    if(e.key==='Backspace'&&!this.value&&k>0){e.preventDefault();c[k-1].value='';c[k-1].classList.remove('f');c[k-1].focus()}
-    else if(e.key==='ArrowLeft'&&k>0){e.preventDefault();c[k-1].focus()}
-    else if(e.key==='ArrowRight'&&k<CL-1){e.preventDefault();c[k+1].focus()}
-    else if(e.key==='Enter'){e.preventDefault();verify()}});
-  inp.addEventListener('paste',function(e){var t=(e.clipboardData||window.clipboardData).getData('text')||'';var d=t.replace(/\D/g,'');
-    if(!d)return;e.preventDefault();clr();fillFrom(0,d.slice(0,CL))});
-  inp.addEventListener('focus',function(){var self=this;setTimeout(function(){try{self.select()}catch(_){}},0)});
-});
+var CL=8,codeIn=$g('gCode'),codeBox=$g('gCodeF'),cellsBox=codeBox.querySelector('.g-cells'),cellEls;
+/* طول کد از تنظیم Supabase (Auth ‹ Email OTP Length) میاد؛ اگه عوضش کردی فقط CL رو عوض کن */
+for(var q=0;q<CL;q++)cellsBox.appendChild(document.createElement('span'));
+cellEls=cellsBox.querySelectorAll('span');
+codeIn.setAttribute('aria-label','کد '+CL+' رقمی');
+/* ارقام فارسی/عربی (کیبورد فارسی موبایل) → انگلیسی؛ هر چیز غیرعددی (فاصله، خط تیره در پیست) حذف می‌شود */
+function normD(t){return String(t||'').replace(/[۰-۹]/g,function(c){return c.charCodeAt(0)-1776}).replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632}).replace(/\D/g,'')}
+function getCode(){return codeIn.value}
+function paintCode(){var v=codeIn.value,foc=document.activeElement===codeIn,cur=Math.min(v.length,CL-1);
+  [].forEach.call(cellEls,function(c,k){c.textContent=v[k]||'';c.classList.toggle('f',!!v[k]);c.classList.toggle('on',foc&&k===cur)})}
+function setCode(v){codeIn.value=v||'';codeBox.classList.remove('ok');paintCode()}
+function caretEnd(){try{var n=codeIn.value.length;codeIn.setSelectionRange(n,n)}catch(_){}}
+codeIn.addEventListener('input',function(){
+  clr();var d=normD(this.value).slice(0,CL);if(this.value!==d)this.value=d;caretEnd();paintCode();
+  if(d.length===CL)verify()});
+codeIn.addEventListener('focus',function(){paintCode();setTimeout(caretEnd,0)});
+codeIn.addEventListener('blur',paintCode);
+codeIn.addEventListener('click',caretEnd);
+codeIn.addEventListener('select',caretEnd);
+codeIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();verify()}});
+codeBox.addEventListener('pointerdown',function(){if(document.activeElement!==codeIn)setTimeout(function(){codeIn.focus()},0)});
 async function verify(){
   if($g('gVerify').disabled)return;var c=getCode();
-  if(c.length<6)return err(2,'کد را کامل وارد کن',$g('gCodeF'));
+  if(c.length<CL)return err(2,'کد را کامل وارد کن',codeBox);
   if(!window.sb)return err(2,'ورود هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');clr();busy($g('gVerify'),true);
   var r=await withT(sb.auth.verifyOtp({email:email,token:c,type:'email'}));
   busy($g('gVerify'),false);
-  if(r.error||!r.data||!r.data.session)return err(2,nice(r.error||'کد اشتباهه'),$g('gCodeF'));
+  if(r.error||!r.data||!r.data.session){
+    err(2,nice(r.error||'کد اشتباهه'),codeBox);
+    setTimeout(function(){if(codeIn.value===c){setCode('');codeIn.focus()}},550);return}
+  codeBox.classList.add('ok');
   afterAuth(r.data.session);
 }
 $g('gVerify').addEventListener('click',verify);
@@ -839,6 +862,15 @@ uinp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault
 /* اگر سشن وجود دارد (مثلاً برگشت از گوگل) */
 sbReady.then(function(ok){if(ok)sb.auth.getSession().then(function(r){var se=r&&r.data&&r.data.session;if(se)afterAuth(se)})});
 setTimeout(function(){if(!$g('gS1').hidden)$g('gEmail').focus()},300);
+function noPan(){if(window.scrollX||window.scrollY)window.scrollTo(0,0);var se=document.scrollingElement;if(se&&(se.scrollLeft||se.scrollTop)){se.scrollLeft=0;se.scrollTop=0}}
+window.addEventListener('scroll',noPan,{passive:true});
+document.addEventListener('focusout',function(){setTimeout(noPan,60)});
+if(window.visualViewport){var vv=window.visualViewport;
+  var fit=function(){if(!document.getElementById('gate'))return;noPan();
+    gate.style.right='auto';gate.style.bottom='auto';
+    gate.style.left=vv.offsetLeft+'px';gate.style.top=vv.offsetTop+'px';
+    gate.style.width=vv.width+'px';gate.style.height=vv.height+'px'};
+  vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);fit()}
 })();
 </script>
 
