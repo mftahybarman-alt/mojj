@@ -613,10 +613,13 @@ body[data-device=android] .statusbar{padding:0 22px 8px;font-size:13px;font-weig
 .g-link{display:block;margin:6px auto 0;padding:8px 10px;font-size:13px;color:var(--dim)}
 .g-link[disabled]{opacity:.55;pointer-events:none}
 .g-sub b{color:var(--text);direction:ltr;unicode-bidi:embed}
-.g-themes{display:flex;gap:10px;margin-top:24px}
-.g-td{width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 1px var(--line);transition:transform .4s var(--spring),box-shadow .3s}
-.g-td:hover{transform:scale(1.18)}.g-td:active{transform:scale(.9)}
-.g-td.on{box-shadow:0 0 0 2px var(--solid-bg),0 0 0 4px var(--accent)}
+.g-otp{width:100%;margin-top:22px;display:flex;gap:8px;justify-content:center;direction:ltr}
+.g-otp input{flex:1;min-width:0;max-width:50px;height:64px;border:0;outline:0;border-radius:999px;background:var(--panel-2);box-shadow:var(--sh-in);text-align:center;font-size:24px;font-weight:800;color:var(--text);caret-color:var(--accent);padding:0;transition:box-shadow .3s,transform .35s var(--spring)}
+.g-otp input:focus{box-shadow:var(--sh-in),0 0 0 2px var(--accent),var(--glow);transform:translateY(-2px)}
+.g-otp input.f{box-shadow:var(--sh-in),0 0 0 1.5px var(--accent)}
+.g-otp.err input{box-shadow:var(--sh-in),0 0 0 2px var(--danger)}
+.g-otp.err{animation:gshake .4s}
+@media (max-width:360px){.g-otp{gap:5px}.g-otp input{height:58px;font-size:21px}}
 .tcard .pvb{margin-bottom:0;height:64px}#avPick .i{width:15px;height:15px}
 .avs{position:absolute;inset:0;z-index:90;display:grid;place-items:center;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
 .avs.on{opacity:1;visibility:visible;transition-delay:0s}
@@ -687,10 +690,7 @@ window.fetch=function(i,o){var u='';try{u=typeof i==='string'?i:(i&&i.url)||''}c
     </div>
     <div id="gS2" hidden>
       <div class="g-sub">کد به <b id="gMail"></b> فرستاده شد</div>
-      <label class="g-field" id="gCodeF">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>
-        <input id="gCode" type="text" inputmode="numeric" dir="ltr" placeholder="کد" maxlength="8" autocomplete="one-time-code" style="text-align:start;letter-spacing:6px">
-      </label>
+      <div class="g-otp" id="gCodeF" dir="ltr"><input type="text" inputmode="numeric" autocomplete="one-time-code" aria-label="رقم 1"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 2"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 3"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 4"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 5"><input type="text" inputmode="numeric" autocomplete="off" aria-label="رقم 6"></div>
       <div class="g-err" id="gErr2"></div>
       <button class="g-go" id="gVerify" type="button"><span class="g-lbl">تأیید و ورود</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="g-spin"></span></button>
       <button class="g-link" id="gResend" type="button">ارسال دوباره</button>
@@ -709,7 +709,6 @@ window.fetch=function(i,o){var u='';try{u=typeof i==='string'?i:(i&&i.url)||''}c
       <div class="g-err" id="gErr3"></div>
       <button class="g-go" id="gGo" type="button"><span class="g-lbl">ساخت حساب</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="g-spin"></span></button>
     </div>
-    <div class="g-themes" id="gThemes"></div>
   </div>
 </div>
 <script>
@@ -729,20 +728,17 @@ var gate=document.getElementById('gate');
 var SK='sb-maarjylszkdcbenhdcjs-auth-token',hasSess=false;try{hasSess=!!localStorage.getItem(SK)}catch(_){}
 if(user&&user.name&&user.auth&&hasSess){gate.remove();return}
 gate.hidden=false;
-var theme=TH.some(function(t){return t.id===prefs.theme})?prefs.theme:'glass';
-function paint(){document.body.dataset.theme=theme;document.getElementById('metaTheme').content=TH.filter(function(t){return t.id===theme})[0].meta;
-  [].forEach.call(document.querySelectorAll('.g-td'),function(b){b.classList.toggle('on',b.dataset.t===theme)})}
-document.getElementById('gThemes').innerHTML=TH.map(function(t){return '<button class="g-td" data-t="'+t.id+'" aria-label="'+t.id+'" style="background:'+t.bg+'"></button>'}).join('');
-document.getElementById('gThemes').addEventListener('click',function(e){var b=e.target.closest('.g-td');if(!b||b.dataset.t===theme)return;
-  var ap=function(){theme=b.dataset.t;paint();var p=get('mowj.prefs')||{};p.theme=theme;try{localStorage.setItem('mowj.prefs',JSON.stringify(p))}catch(_){}};
-  document.startViewTransition?document.startViewTransition(ap):ap()});
+var mq=window.matchMedia?matchMedia('(prefers-color-scheme: light)'):null;
+var theme=(mq&&mq.matches)?'neu':'glass';
+function paint(){document.body.dataset.theme=theme;document.getElementById('metaTheme').content=TH.filter(function(t){return t.id===theme})[0].meta}
+if(mq){var onMq=function(){theme=mq.matches?'neu':'glass';if(document.getElementById('gate'))paint()};mq.addEventListener?mq.addEventListener('change',onMq):mq.addListener(onMq)}
 paint();
 var $g=function(i){return document.getElementById(i)};
 var SB_URL=(location.origin+'/sb'),SB_KEY='sb_publishable_Z5SGl_iyfBeRujflGM4D7g_TowSmsuJ';
 var steps=['gS1','gS2','gS3'],email='',resendT=null;
 function show(n){steps.forEach(function(id,i){$g(id).hidden=(i!==n-1)});var t=document.querySelector('.g-card h1');t.textContent=n===3?'یه قدم مونده':'به موج خوش اومدی'}
 function err(n,m,f){var e=$g('gErr'+n);e.textContent=m||'';if(f){f.classList.remove('err');void f.offsetWidth;f.classList.add('err')}}
-function clr(){document.querySelectorAll('.g-field.err').forEach(function(f){f.classList.remove('err')});[1,2,3].forEach(function(n){$g('gErr'+n).textContent=''})}
+function clr(){document.querySelectorAll('.g-field.err,.g-otp.err').forEach(function(f){f.classList.remove('err')});[1,2,3].forEach(function(n){$g('gErr'+n).textContent=''})}
 function busy(b,on){b.classList.toggle('load',on);b.disabled=on}
 function withT(p,ms){return Promise.race([p,new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'))},ms||25000)})]).catch(function(e){return{error:e}})}
 function nice(e){var m=String(e&&e.message||e||'');
@@ -780,7 +776,7 @@ async function sendCode(btn){
   var r=await withT(sb.auth.signInWithOtp({email:v,options:{shouldCreateUser:mode==='signup'}}));
   busy(btn,false);
   if(r.error)return err(btn===$g('gSend')?1:2,nice(r.error));
-  email=v;$g('gMail').textContent=v;show(2);cool();$g('gCode').value='';setTimeout(function(){$g('gCode').focus()},200);
+  email=v;$g('gMail').textContent=v;show(2);cool();setCode('');setTimeout(function(){cells()[0].focus()},200);
 }
 function cool(){var b=$g('gResend'),n=61;clearInterval(resendT);b.disabled=true;
   function tick(){if(n<=0){clearInterval(resendT);b.disabled=false;b.textContent='ارسال دوباره';return}b.textContent='ارسال دوباره ('+n--+')'}
@@ -789,9 +785,27 @@ $g('gSend').addEventListener('click',function(){sendCode($g('gSend'))});
 $g('gEmail').addEventListener('input',clr);
 $g('gEmail').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendCode($g('gSend'))}});
 /* --- مرحله ۲: کد --- */
-$g('gCode').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'');clr()});
+var CL=6;
+function cells(){return $g('gCodeF').querySelectorAll('input')}
+function getCode(){return [].map.call(cells(),function(i){return i.value}).join('')}
+function setCode(v){[].forEach.call(cells(),function(i,k){i.value=v[k]||'';i.classList.toggle('f',!!i.value)})}
+function fillFrom(k,digits){var c=cells();for(var j=0;j<digits.length&&k+j<CL;j++){c[k+j].value=digits[j];c[k+j].classList.add('f')}
+  var nx=Math.min(k+digits.length,CL-1);c[nx].focus();if(getCode().length===CL)verify()}
+[].forEach.call(cells(),function(inp,k){
+  inp.addEventListener('input',function(){clr();var d=this.value.replace(/\D/g,'');
+    if(!d){this.value='';this.classList.remove('f');return}
+    this.value='';this.classList.remove('f');fillFrom(k,d)});
+  inp.addEventListener('keydown',function(e){var c=cells();
+    if(e.key==='Backspace'&&!this.value&&k>0){e.preventDefault();c[k-1].value='';c[k-1].classList.remove('f');c[k-1].focus()}
+    else if(e.key==='ArrowLeft'&&k>0){e.preventDefault();c[k-1].focus()}
+    else if(e.key==='ArrowRight'&&k<CL-1){e.preventDefault();c[k+1].focus()}
+    else if(e.key==='Enter'){e.preventDefault();verify()}});
+  inp.addEventListener('paste',function(e){var t=(e.clipboardData||window.clipboardData).getData('text')||'';var d=t.replace(/\D/g,'');
+    if(!d)return;e.preventDefault();clr();fillFrom(0,d.slice(0,CL))});
+  inp.addEventListener('focus',function(){var self=this;setTimeout(function(){try{self.select()}catch(_){}},0)});
+});
 async function verify(){
-  var c=$g('gCode').value.trim();
+  if($g('gVerify').disabled)return;var c=getCode();
   if(c.length<6)return err(2,'کد را کامل وارد کن',$g('gCodeF'));
   if(!window.sb)return err(2,'ورود هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');clr();busy($g('gVerify'),true);
   var r=await withT(sb.auth.verifyOtp({email:email,token:c,type:'email'}));
@@ -800,7 +814,6 @@ async function verify(){
   afterAuth(r.data.session);
 }
 $g('gVerify').addEventListener('click',verify);
-$g('gCode').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();verify()}});
 $g('gResend').addEventListener('click',function(){sendCode($g('gResend'))});
 $g('gBack').addEventListener('click',function(){clr();show(1);$g('gEmail').focus()});
 /* --- مرحله ۳: اسم و نام کاربری --- */
@@ -1058,26 +1071,30 @@ const Snd=(()=>{let ctx=null,master=null,noise=null;
   const init=()=>{if(ctx)return ctx;try{const A=window.AudioContext||window.webkitAudioContext;ctx=new A();master=ctx.createGain();master.gain.value=.55;master.connect(ctx.destination);
     noise=ctx.createBuffer(1,ctx.sampleRate*.6,ctx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}catch(e){ctx=null}return ctx};
   const on=()=>S.sound&&init()&&(ctx.state==='suspended'&&ctx.resume(),true);
+  const onR=()=>S.ring&&init()&&(ctx.state==='suspended'&&ctx.resume(),true);
   const tone=(f,f2,t,v,at=0,type='sine')=>{const n=ctx.currentTime+at;const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,n);
     if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+t);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(v,n+.012);g.gain.exponentialRampToValueAtTime(.0001,n+t);o.connect(g);g.connect(master);o.start(n);o.stop(n+t+.03)};
-  return{unlock(){if(S.sound&&init()&&ctx.state==='suspended')ctx.resume()},
+  return{unlock(){if((S.sound||S.ring)&&init()&&ctx.state==='suspended')ctx.resume()},
     send(){if(!on())return;tone(300,760,.09,.3);tone(760,420,.12,.12,.03)},
     recv(){if(!on())return;tone(784,0,.5,.16,0,'triangle');tone(1175,0,.6,.13,.09,'triangle');tone(1568,0,.5,.05,.18)},
     click(){if(!on())return;tone(1700,1100,.035,.09,0,'triangle')},
     react(){if(!on())return;tone(660,1320,.1,.2);tone(1760,0,.16,.1,.06)},
     rec(up){if(!on())return;up?(tone(500,0,.08,.15),tone(800,0,.1,.15,.08)):(tone(800,0,.08,.15),tone(480,0,.12,.15,.08))},
-    ring(){if(!on())return;for(let i=0;i<2;i++){tone(440,0,.35,.09,i*.9);tone(480,0,.35,.09,i*.9)}},
+    ringIn(){if(!onR())return;[784,988,1175,988,784,988,1175,1568].forEach((f,i)=>{tone(f,0,.34,.42,i*.2,'triangle');tone(f/2,0,.34,.16,i*.2)})},
+    ringOut(){if(!onR())return;tone(425,0,.5,.2,0);tone(425,0,.5,.2,.7)},
+    ring(){this.ringOut()},
     swoosh(){if(!on())return;const n=ctx.currentTime;const s=ctx.createBufferSource();s.buffer=noise;const f=ctx.createBiquadFilter();f.type='bandpass';f.Q.value=2.5;
       f.frequency.setValueAtTime(300,n);f.frequency.exponentialRampToValueAtTime(3500,n+.4);const g=ctx.createGain();g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.25,n+.15);g.gain.exponentialRampToValueAtTime(.0001,n+.5);
       s.connect(f);f.connect(g);g.connect(master);s.start(n);s.stop(n+.55)}}})();
 
 /* ================= state ================= */
-const S={theme:'glass',device:'desktop',tab:'chats',active:null,filter:'all',q:'',sound:true,sim:true,mode:'desk',mobOpen:false,drawer:false,rec:null,replyTo:null,ctx:null,sending:false,dtab:'media'};
+const S={theme:'glass',device:'desktop',tab:'chats',active:null,filter:'all',q:'',sound:true,ring:true,sim:true,mode:'desk',mobOpen:false,drawer:false,rec:null,replyTo:null,ctx:null,sending:false,dtab:'media'};
 const prefs=store.get();
 if(prefs.theme&&THEMES.some(t=>t.id===prefs.theme))S.theme=prefs.theme;
 if(prefs.sound===false)S.sound=false;
+if(prefs.ring===false)S.ring=false;
 if(prefs.sim===false)S.sim=false;
-const save=()=>store.set({theme:S.theme,device:S.device,sound:S.sound,sim:S.sim});
+const save=()=>store.set({theme:S.theme,device:S.device,sound:S.sound,ring:S.ring,sim:S.sim});
 
 /* ================= DOM refs ================= */
 const body=document.body,app=$('#app'),device=$('#device');
@@ -1126,7 +1143,9 @@ $('#themeDots').addEventListener('click',e=>{const b=e.target.closest('.td');if(
 $('#railTheme').addEventListener('click',e=>{const i=THEMES.findIndex(t=>t.id===S.theme);setTheme(THEMES[(i+1)%THEMES.length].id,e)});
 
 /* sound toggle */
-function paintSound(){$('#soundBtn').innerHTML=ic(S.sound?'vol':'volx');$$('[data-sw=sound]').forEach(s=>s.classList.toggle('on',S.sound))}
+function paintSound(){$('#soundBtn').innerHTML=ic(S.sound?'vol':'volx');$$('[data-sw=sound]').forEach(s=>s.classList.toggle('on',S.sound));$$('[data-sw=ring]').forEach(s=>s.classList.toggle('on',S.ring))}
+function setRing(v){S.ring=v;save();paintSound();if(v){Snd.unlock();Snd.ringIn();askNotif()}}
+function askNotif(){try{window.Notification&&Notification.permission==='default'&&Notification.requestPermission()}catch(_){}}
 function setSound(v){S.sound=v;save();paintSound();if(v){Snd.unlock();Snd.click()}}
 $('#soundBtn').addEventListener('click',()=>setSound(!S.sound));
 ['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,()=>Snd.unlock(),{passive:true}));
@@ -1310,7 +1329,8 @@ $('#setList').innerHTML=`
 <div class="set-card"><h3>نام کاربری</h3><label class="g-field" id="sUserField" style="margin-top:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M15.6 12v1.3a2.6 2.6 0 0 0 5.2 0V12a8.8 8.8 0 1 0-3.5 7"/></svg><input id="sUser" type="text" dir="ltr" placeholder="نام کاربری" maxlength="20" autocapitalize="none" autocomplete="off" spellcheck="false" style="text-align:start" value="${ME_USER}"></label><div class="g-err" id="sUserErr"></div></div>
 <div class="set-card"><div class="theme-grid${THEMES.findIndex(t=>t.id===S.theme)>=4?'':' collapsed'}" id="themeGrid">${THEMES.map((t,i)=>`<button class="tcard${i>=4?' tmore':''}" data-t="${t.id}"><div class="pvb" style="background:${t.bg}"><i style="top:14px;inset-inline-start:10px;width:52%;background:rgba(255,255,255,.35)"></i><i style="top:34px;inset-inline-end:10px;width:44%;background:rgba(0,0,0,.35)"></i></div></button>`).join('')}</div><button type="button" class="avs-b" id="moreThemes" style="margin-top:12px">${THEMES.findIndex(t=>t.id===S.theme)>=4?'نمایش کمتر':'تم‌های بیشتر'}</button></div>
 <div class="set-card"><h3>عمومی</h3>
-<div class="trow"><div>افکت صوتی</div><button class="switch" data-sw="sound" aria-label="صدا"></button></div></div>
+<div class="trow"><div>افکت صوتی</div><button class="switch" data-sw="sound" aria-label="صدا"></button></div>
+<div class="trow"><div>صدای زنگ تماس</div><button class="switch" data-sw="ring" aria-label="زنگ تماس"></button></div></div>
 <div class="set-card"><button type="button" class="avs-b dng" id="logoutBtn">خروج از حساب کاربری</button></div>`;
 (function(){const inp=$('#sUser'),fl=$('#sUserField'),er=$('#sUserErr');let cur=ME_USER;
   inp.addEventListener('input',()=>{inp.value=inp.value.replace(/[^A-Za-z0-9_]/g,'');fl.classList.remove('err');er.textContent=''});
@@ -1336,7 +1356,7 @@ $('#setList').addEventListener('click',e=>{
     try{Storage.prototype.setItem=function(){}}catch(_){}
     setTimeout(()=>location.reload(),150);return}
   const t=e.target.closest('.tcard');if(t)return setTheme(t.dataset.t,e);
-  const s=e.target.closest('[data-sw]');if(!s)return;if(s.dataset.sw==='sound')setSound(!S.sound)});
+  const s=e.target.closest('[data-sw]');if(!s)return;if(s.dataset.sw==='sound')setSound(!S.sound);else if(s.dataset.sw==='ring')setRing(!S.ring)});
 /* عکس پروفایل خودم */
 function paintMeAv(){const im=$('#meAv img');if(im)im.src=meAvSrc();}
 function setMyAv(v){ME_AV=v;try{v?localStorage.setItem('mowj.avatar',JSON.stringify(v)):localStorage.removeItem('mowj.avatar')}catch(e){toast('ذخیره‌ی عکس انجام نشد')}paintMeAv();Snd.click()}
@@ -1805,7 +1825,7 @@ function renderBar(){
   bar.innerHTML=`<button class="cb2 ${cl.muted?'on':''}" id="mute" aria-label="بی‌صدا">${ic(cl.muted?'mute':'mic')}</button>${cl.video?`<button class="cb2 ${cl.camOff?'on':''}" id="cam" aria-label="دوربین">${ic('video')}</button>`:''}${hang}`}
 function endCall(reason,notify){
   const cl=CALL;if(!cl)return;CALL=null;cl.closing=true;
-  clearTimeout(cl.noAns);clearTimeout(cl.discT);clearTimeout(cl.openT);clearInterval(cl.ringI);clearInterval(cl.tI);
+  clearTimeout(cl.noAns);clearTimeout(cl.discT);clearTimeout(cl.openT);stopRing(cl);clearInterval(cl.tI);
   if(cl.ctrl){
     if(notify&&!cl.demo){try{cl.ctrl.send({t:cl.state==='incoming'&&reason==='reject'?'reject':'hangup'})}catch(e){}}
     setTimeout(()=>{try{cl.ctrl.close()}catch(e){}},500)}
@@ -1821,12 +1841,14 @@ function endCall(reason,notify){
   setTimeout(()=>{if(CALL)return;callEl.classList.remove('on');setTimeout(()=>{if(!CALL){callEl.innerHTML='';callEl.className='call'}},450)},dur||reason?650:150)}
 function onConnected(){
   const cl=CALL;if(!cl||cl.state==='active')return;
-  cl.state='active';cl.startedAt=Date.now();clearTimeout(cl.noAns);clearTimeout(cl.openT);clearInterval(cl.ringI);
+  cl.state='active';cl.startedAt=Date.now();clearTimeout(cl.noAns);clearTimeout(cl.openT);stopRing(cl);
   if(cl.video)callEl.classList.add('live-v');
   Snd.recv();callSt('۰۰:۰۰');renderBar();
   cl.tI=setInterval(()=>callSt(durTxt(Math.floor((Date.now()-cl.startedAt)/1000))),1000)}
 function newCall(c,dir,video){return{peer:c,rid:c.rid,dir,video:!!video,state:dir==='in'?'incoming':'calling',muted:false,camOff:false}}
-function ringLoop(cl){Snd.ring();cl.ringI=setInterval(()=>Snd.ring(),3200)}
+function ringLoop(cl){const f=()=>{if(cl.dir==='in'){Snd.ringIn();if(S.ring)try{navigator.vibrate&&navigator.vibrate([700,300,700])}catch(_){}}else Snd.ringOut()};f();clearInterval(cl.ringI);cl.ringI=setInterval(f,3000)}
+function stopRing(cl){clearInterval(cl.ringI);try{navigator.vibrate&&navigator.vibrate(0)}catch(_){}try{cl.nt&&cl.nt.close()}catch(_){}document.title=BASE_TITLE}
+const BASE_TITLE=document.title;
 function bindMC(cl,mc){
   mc.on('stream',rs=>{if(CALL!==cl)return;const rv=$('#rVid');if(rv){rv.srcObject=rs;rv.play&&rv.play().catch(()=>{})}onConnected()});
   mc.on('close',()=>{if(CALL===cl&&!cl.closing)endCall(cl.state==='active'?'':'fail',false)});
@@ -1843,10 +1865,11 @@ function onCtrl(conn,d){
     const c=contactFor({uid:d.uid,name:d.name,username:un});
     const cl=CALL=newCall(c,'in',d.video);cl.ctrl=conn;cl.pid=pidOf(un);
     renderCall();callSt(cl.video?'تماس تصویری ورودی…':'تماس ورودی…');ringLoop(cl);
+    try{if(document.hidden){document.title='📞 تماس ورودی — '+c.name;if(window.Notification&&Notification.permission==='granted'){const nt=new Notification('تماس ورودی از '+c.name,{body:cl.video?'تماس تصویری':'تماس صوتی',tag:'mowj-call',requireInteraction:true});nt.onclick=()=>{try{window.focus();nt.close()}catch(_){}};cl.nt=nt}}}catch(_){}
     cl.noAns=setTimeout(()=>{if(CALL===cl&&cl.state==='incoming')endCall('miss',true)},45000);return}
   const cl=CALL;if(!cl||cl.ctrl!==conn)return;
   if(d.t==='accept'&&cl.dir==='out'&&cl.state==='calling'){
-    cl.state='connecting';clearInterval(cl.ringI);clearTimeout(cl.noAns);callSt('در حال اتصال…');
+    cl.state='connecting';stopRing(cl);clearTimeout(cl.noAns);callSt('در حال اتصال…');
     const mc=PEER.call(cl.pid,cl.local,{metadata:{video:cl.video}});cl.mc=mc;bindMC(cl,mc);
     cl.noAns=setTimeout(()=>{if(CALL===cl&&cl.state!=='active')endCall('fail',true)},20000)}
   else if(d.t==='hangup')endCall(cl.state==='incoming'?'miss':'',false)
@@ -1870,7 +1893,7 @@ function initPeer(){
     if(cl&&cl.dir==='in'&&cl.state==='connecting'&&cl.local&&mc.peer===cl.pid){cl.mc=mc;bindMC(cl,mc);mc.answer(cl.local)}
     else{try{mc.close()}catch(e){}}})}
 async function startCall(c,video){
-  if(!c||c.self)return;
+  if(!c||c.self)return;askNotif();Snd.unlock();
   if(CALL){if(CALL.peer===c)callEl.classList.add('on');else toast('الان در تماس هستی');return}
   video=!!video;
   /* مخاطب‌های نمونه: فقط شبیه‌سازی */
@@ -1894,8 +1917,8 @@ async function startCall(c,video){
     cl.noAns=setTimeout(()=>{if(CALL===cl&&cl.state==='calling')endCall('noanswer',true)},45000);
   }catch(e){if(CALL===cl)endCall(e&&(e.name==='NotAllowedError'||e.name==='NotFoundError'||e.message==='nomedia')?'mic':'error',false)}}
 async function acceptCall(){
-  const cl=CALL;if(!cl||cl.state!=='incoming')return;
-  clearInterval(cl.ringI);clearTimeout(cl.noAns);cl.state='connecting';callSt('در حال اتصال…');renderBar();
+  const cl=CALL;if(!cl||cl.state!=='incoming')return;askNotif();
+  stopRing(cl);clearTimeout(cl.noAns);cl.state='connecting';callSt('در حال اتصال…');renderBar();
   try{
     cl.local=await getMedia(cl.video);if(CALL!==cl){cl.local.getTracks().forEach(t=>t.stop());return}
     attachLocal(cl);cl.ctrl.send({t:'accept'});
